@@ -104,7 +104,7 @@ export default {
           .then(response => {
             let data = response.data;
             console.log(data)
-            this.$router.push("/product/" + product.id)
+            this.$router.push("/product/" + response.data.id)
           })
           .catch(e => {
             console.log(e);
