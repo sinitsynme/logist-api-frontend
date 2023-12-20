@@ -6,7 +6,7 @@
       </router-link>
       <div class="navbar-nav mr-lg-5">
         <li class="nav-item">
-          <router-link to="/organization" class="nav-link">Организации</router-link>
+          <router-link to="/organization" class="nav-link">Предприятия</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/warehouse" class="nav-link">Склады</router-link>

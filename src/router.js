@@ -84,6 +84,29 @@ const routes =  [
     props: true,
     component: () => import("./components/product/ProductEditForm.vue")
   },
+  {
+    path: "/organization",
+    alias: "/organization-list",
+    name: "organization-list",
+    component: () => import("./components/organization/OrganizationList.vue")
+  },
+  {
+    path: "/organization/:id",
+    name: "organization",
+    props: true,
+    component: () => import("./components/organization/Organization.vue")
+  },
+  {
+    path: "/organizationCreate",
+    name: "organizationForm",
+    component: () => import("./components/organization/OrganizationForm.vue")
+  },
+  {
+    path: "/organizationEdit/:id",
+    name: "organizationFormEdit",
+    props: true,
+    component: () => import("./components/organization/OrganizationEditForm.vue")
+  },
 ];
 
 const router = createRouter({
