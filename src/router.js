@@ -107,6 +107,12 @@ const routes =  [
     props: true,
     component: () => import("./components/organization/OrganizationEditForm.vue")
   },
+  {
+    path: "/maps/:lat/:lng",
+    name: "map-dev-remove",
+    props: true,
+    component: () => import("./components/warehouse/map/MapComponent.vue")
+  },
 ];
 
 const router = createRouter({

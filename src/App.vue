@@ -20,6 +20,9 @@
         <li class="nav-item">
           <router-link to="/product" class="nav-link">Товары</router-link>
         </li>
+        <li class="nav-item">
+          <router-link to="/maps/53.181759/50.177075" class="nav-link">Карта-DEV</router-link>
+        </li>
       </div>
 
       <form class="navbar-form mr-auto d-flex" role="search" @submit.prevent="onsubmit">
