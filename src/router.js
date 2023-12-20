@@ -108,10 +108,27 @@ const routes =  [
     component: () => import("./components/organization/OrganizationEditForm.vue")
   },
   {
-    path: "/maps/:lat/:lng",
-    name: "map-dev-remove",
+    path: "/warehouse",
+    alias: "/warehouse-list",
+    name: "warehouse-list",
+    component: () => import("./components/warehouse/WarehouseList.vue")
+  },
+  {
+    path: "/warehouse/:id",
+    name: "warehouse",
     props: true,
-    component: () => import("./components/warehouse/map/MapComponent.vue")
+    component: () => import("./components/warehouse/Warehouse.vue")
+  },
+  {
+    path: "/warehouseCreate",
+    name: "warehouseForm",
+    component: () => import("./components/warehouse/WarehouseForm.vue")
+  },
+  {
+    path: "/warehouseEdit/:id",
+    name: "warehouseFormEdit",
+    props: true,
+    component: () => import("./components/warehouse/WarehouseEditForm.vue")
   },
 ];
 

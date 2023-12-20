@@ -1,5 +1,5 @@
 <template>
-  <div style="height:600px; width:800px">
+  <div style="height:400px; width:500px">
     <l-map ref="map" v-model:zoom="zoom" :center="[this.lat, this.lng]" :options="{attributionControl: false}">
       <l-tile-layer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -25,7 +25,9 @@ export default {
 
   mounted() {
     this.marker = new L.LatLng(this.lat, this.lng)
-
+  },
+  updated() {
+    this.marker = new L.LatLng(this.lat, this.lng)
   },
   components: {
     LMap,
