@@ -130,6 +130,24 @@ const routes =  [
     props: true,
     component: () => import("./components/warehouse/WarehouseEditForm.vue")
   },
+  {
+    path: "/storedProduct/warehouse/:warehouseId",
+    name: "storedProductList",
+    props: true,
+    component: () => import("./components/stored_product/ProductInWarehouseList.vue")
+  },
+  {
+    path: "/storedProduct/:productId/:warehouseId",
+    name: "storedProduct",
+    props: true,
+    component: () => import("./components/stored_product/ProductInWarehouse.vue")
+  },
+  {
+    path: "/addStoredProduct/:warehouseId",
+    name: "addStoredProduct",
+    props: true,
+    component: () => import("./components/stored_product/AddStoredProduct.vue")
+  },
 ];
 
 const router = createRouter({

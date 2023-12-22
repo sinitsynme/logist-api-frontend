@@ -1,6 +1,19 @@
 <template>
   <div class="container mt-3">
+    <div class="d-flex justify-content-between">
     <h2 class="text-center">Просмотр информации о складе</h2>
+      <router-link :to="{
+        name: 'storedProductList',
+        params: {
+          warehouseId: id
+        }}"
+    >
+      <button class="btn btn-outline-info">
+        Просмотр товаров на складе
+      </button>
+    </router-link>
+    </div>
+
     <div class="row mt-3 ">
       <div class="border border-dark mr-2">
         <MapComponent :lat="lat" :lng="lng"/>
