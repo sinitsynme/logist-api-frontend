@@ -2,7 +2,7 @@
 
   <div class="container mt-2">
     <div class="d-flex justify-content-between text-center">
-      <span>Список всех товаров на складе {{warehouseId}}</span>
+      <span>Список всех товаров на складе {{ warehouseId }}</span>
 
       <router-link :to="{
               name: 'addStoredProduct',
@@ -24,7 +24,7 @@
             ID
           </th>
           <th class="text-left">
-            Изображение
+            Номер на складе
           </th>
           <th class="text-left">
             Название
@@ -46,10 +46,17 @@
             v-for="item in products"
             :key="item.product.id"
         >
-          <td>{{ item.product.id }}</td>
-          <td class="text-center">
-            <img :src="item.product.imageLink" class="product-img" alt="Товар без изображения">
+          <td>
+            <router-link :to="{
+              name: 'product',
+              params: {
+               id: item.product.id
+              }
+              }">
+              {{ item.product.id }}
+            </router-link>
           </td>
+          <td>{{ item.storedProduct.warehouseCode }}</td>
           <td>{{ item.product.name }}</td>
 
           <td>
@@ -73,7 +80,7 @@
             </router-link>
           </td>
           <td>
-            {{item.storedProduct.availableForReserveQuantity}}
+            {{ item.storedProduct.availableForReserveQuantity }}
           </td>
 
 
@@ -134,10 +141,10 @@ export default {
       StoredProductDataService
           .getPage(0, 15, this.warehouseId)
           .then(response => {
-            console.log(response)
+                console.log(response)
                 let storedProducts = response.data
                 storedProducts.forEach((it) => {
-                     this.getProduct(it)
+                  this.getProduct(it)
                 })
               }
           )
@@ -146,7 +153,7 @@ export default {
     getProduct(storedProduct) {
       ProductDataService
           .get(storedProduct.productId)
-          .then( response => {
+          .then(response => {
             let data = response.data;
             console.log(data)
             let product = {}
@@ -154,38 +161,12 @@ export default {
             product.name = data.name
             product.category = data.productCategory
             product.manufacturer = data.manufacturer
-            this.addImageLinkForProduct(storedProduct, product)
-          })
-          .catch(e => {
-            console.log(e);
-          });
-    },
-     addImageLinkForProduct(storedProduct, product) {
-      return ProductDataService
-          .getImageLink(product.id)
-          .then(response => {
-            let data = response.data;
-            product.imageLink = data.link
             this.products.push({storedProduct, product})
           })
           .catch(e => {
             console.log(e);
           });
     },
-
-    fillProductsWithImages() {
-      this.products.forEach(function (part, index) {
-        ProductDataService
-            .getImageLink(part.product.id)
-            .then(response => {
-              this[index].product.imageLink = response.data.link
-              console.log(response.data);
-            })
-            .catch(e => {
-              console.log(e);
-            });
-      }, this.products)
-    }
   }
 }
 

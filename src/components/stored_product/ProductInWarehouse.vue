@@ -2,7 +2,13 @@
   <div class="container mt-3">
     <h2 class="text-center">Просмотр информации о товаре на складе {{ warehouseId }}</h2>
     <div class="row mt-5 ">
-      <img :src="storedProduct.imageLink" alt="У товара нет изображения" class="big-product-image mr-auto ml-auto">
+      <div class="ml-auto mr-auto ">
+        <div class="border">
+          <div class="pl-3 pr-3">
+            <img :src="storedProduct.imageLink" alt="У товара нет изображения" class="big-product-image">
+          </div>
+        </div>
+      </div>
       <table class="table w-50">
         <tbody>
         <tr>
@@ -83,9 +89,10 @@
               {{ storedProduct.availableForReserveQuantity }}
 
               <form class="ml-auto" @submit.prevent="onsubmit">
-                  <input id="reserveProductInput" type="number" max="10000" width="50px" v-model="wantToReserveQuantity"
-                         class="align-middle mr-1">
-                  <button class="btn btn-outline-info align-middle fixed-width" @click="reserveProduct">Зарезервировать</button>
+                <input id="reserveProductInput" type="number" max="10000" width="50px" v-model="wantToReserveQuantity"
+                       class="align-middle mr-1">
+                <button class="btn btn-outline-info align-middle fixed-width" @click="reserveProduct">Зарезервировать
+                </button>
               </form>
 
             </div>
@@ -102,7 +109,8 @@
               <form class="ml-auto" @submit.prevent="onsubmit">
                 <input id="removeProductInput" type="number" max="10000" width="50px" v-model="wantToRemoveQuantity"
                        class="align-middle mr-1">
-                <button class="btn btn-outline-info align-middle fixed-width" @click="removeProduct">Списать резерв</button>
+                <button class="btn btn-outline-info align-middle fixed-width" @click="removeProduct">Списать резерв
+                </button>
               </form>
 
             </div>
@@ -215,7 +223,7 @@ export default {
           });
     },
     reserveProduct() {
-      if(this.wantToReserveQuantity < 1) {
+      if (this.wantToReserveQuantity < 1) {
         let input = document.getElementById("reserveProductInput")
         input.classList.add("red")
         return
@@ -233,7 +241,7 @@ export default {
     },
 
     removeProduct() {
-      if(this.wantToRemoveQuantity < 1) {
+      if (this.wantToRemoveQuantity < 1) {
         let input = document.getElementById("removeProductInput")
         input.classList.add("red")
         return
@@ -250,7 +258,7 @@ export default {
           })
     },
     addProduct() {
-      if(this.wantToAddQuantity < 1) {
+      if (this.wantToAddQuantity < 1) {
         let input = document.getElementById("addProductInput")
         input.classList.add("red")
         return
@@ -276,7 +284,7 @@ export default {
   height: 400px;
 }
 
-input[type='number']{
+input[type='number'] {
   width: 80px;
   font-size: 16pt;
 }
