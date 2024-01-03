@@ -6,7 +6,7 @@
       </router-link>
       <div class="navbar-nav mr-lg-5">
         <li class="nav-item">
-          <router-link to="/organization" class="nav-link">Организации</router-link>
+          <router-link to="/organization" class="nav-link">Предприятия</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/warehouse" class="nav-link">Склады</router-link>
@@ -24,8 +24,14 @@
 
       <form class="navbar-form mr-auto d-flex" role="search" @submit.prevent="onsubmit">
         <input v-model="searchQuery" class="form-control me-2 col-lg-8" type="search" placeholder="Найти товар"
-               aria-label="Найти товар">
-        <button class="btn btn-outline-success my-2 my-sm-0" @click="searchProducts">Поиск</button>
+               aria-label="Найти товар" size="45">
+        <router-link to="product-search">
+        </router-link>
+        <router-link :to="{
+        name: 'product-search',
+        query: {searchQuery: searchQuery}}" class="my-2 my-sm-0 ml-2">
+          <button class="btn btn-outline-success">Поиск</button>
+        </router-link>
       </form>
 
       <div class="navbar ml-auto">
@@ -34,7 +40,7 @@
     </nav>
 
     <div>
-      <router-view/>
+      <router-view :key="this.$route.path"/>
     </div>
   </div>
 

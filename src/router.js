@@ -8,6 +8,12 @@ const routes =  [
     component: () => import("./components/Main")
   },
   {
+    path: "/login",
+    alias: "/login",
+    name: "login-page",
+    component: () => import("./components/LoginForm.vue")
+  },
+  {
     path: "/manufacturer",
     alias: "/manufacturer-list",
     name: "manufacturer-list",
@@ -83,6 +89,70 @@ const routes =  [
     name: "productFormEdit",
     props: true,
     component: () => import("./components/product/ProductEditForm.vue")
+  },
+  {
+    path: "/organization",
+    alias: "/organization-list",
+    name: "organization-list",
+    component: () => import("./components/organization/OrganizationList.vue")
+  },
+  {
+    path: "/organization/:id",
+    name: "organization",
+    props: true,
+    component: () => import("./components/organization/Organization.vue")
+  },
+  {
+    path: "/organizationCreate",
+    name: "organizationForm",
+    component: () => import("./components/organization/OrganizationForm.vue")
+  },
+  {
+    path: "/organizationEdit/:id",
+    name: "organizationFormEdit",
+    props: true,
+    component: () => import("./components/organization/OrganizationEditForm.vue")
+  },
+  {
+    path: "/warehouse",
+    alias: "/warehouse-list",
+    name: "warehouse-list",
+    component: () => import("./components/warehouse/WarehouseList.vue")
+  },
+  {
+    path: "/warehouse/:id",
+    name: "warehouse",
+    props: true,
+    component: () => import("./components/warehouse/Warehouse.vue")
+  },
+  {
+    path: "/warehouseCreate",
+    name: "warehouseForm",
+    component: () => import("./components/warehouse/WarehouseForm.vue")
+  },
+  {
+    path: "/warehouseEdit/:id",
+    name: "warehouseFormEdit",
+    props: true,
+    component: () => import("./components/warehouse/WarehouseEditForm.vue")
+  },
+  {
+    path: "/storedProduct/warehouse/:warehouseId",
+    name: "storedProductList",
+    props: true,
+    component: () => import("./components/stored_product/ProductInWarehouseList.vue")
+  },
+  {
+    path: "/storedProduct/:productId/:warehouseId",
+    name: "storedProduct",
+    props: true,
+    component: () => import("./components/stored_product/ProductInWarehouse.vue")
+  },
+  {
+    path: "/addStoredProduct/:warehouseId",
+    name: "addStoredProduct",
+    props: true,
+    component: () => import("./components/stored_product/AddStoredProduct.vue")
   },
 ];
 

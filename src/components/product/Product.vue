@@ -1,6 +1,19 @@
 <template>
   <div class="container mt-3">
-    <h2 class="text-center">Просмотр информации о товаре</h2>
+    <div class="d-flex justify-content-between">
+      <h2 class="text-center">Просмотр информации о товаре</h2>
+      <router-link :to="{
+        name: 'addStoredProduct',
+        query: {productId: product.id},
+        params: {
+          warehouseId: 0
+        }}"
+      >
+        <button class="btn btn-outline-info">
+          Добавить этот товар на склад
+        </button>
+      </router-link>
+    </div>
     <div class="row mt-3 ">
       <img :src="product.imageLink" alt="У товара нет изображения" class="big-product-image mr-auto ml-auto">
       <table class="table w-50">
