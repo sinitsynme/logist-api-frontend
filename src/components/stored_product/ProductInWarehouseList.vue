@@ -144,6 +144,7 @@ export default {
                 console.log(response)
                 let storedProducts = response.data
                 storedProducts.forEach((it) => {
+                  if (it.quantity === 0) return
                   this.getProduct(it)
                 })
               }

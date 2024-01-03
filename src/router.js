@@ -8,6 +8,12 @@ const routes =  [
     component: () => import("./components/Main")
   },
   {
+    path: "/login",
+    alias: "/login",
+    name: "login-page",
+    component: () => import("./components/LoginForm.vue")
+  },
+  {
     path: "/manufacturer",
     alias: "/manufacturer-list",
     name: "manufacturer-list",
