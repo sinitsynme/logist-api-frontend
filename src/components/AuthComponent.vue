@@ -1,14 +1,17 @@
 <template>
   <div v-if="!isAuthenticated">
-    <button class="btn btn-outline-info" @click="auth">Войти</button>
+    <button class="btn btn-outline-info" @click="routeToLogin">Войти</button>
   </div>
   <div class="d-block" v-else>
-    <b class="text-info mr-2">m.sinitsyn</b>
-    <button class="btn btn-outline-danger" @click="auth">Выйти</button>
+    <b class="text-info mr-2">{{ email }}</b>
+    <button class="btn btn-outline-danger" @click="logout">Выйти</button>
   </div>
 </template>
 
 <script>
+
+import {useAuthStore} from "@/auth/authStore";
+
 export default {
   name: "AuthComponent",
   props: {
@@ -16,13 +19,26 @@ export default {
   },
   data() {
     return {
-      isAuthenticated: false
+      authStore: useAuthStore(),
+    }
+  },
+  computed: {
+    isAuthenticated() {
+      return this.authStore.isAuthenticated
+    },
+
+    email() {
+      return this.authStore.userEmail
     }
   },
   methods: {
-    auth() {
-      //mock auth for now
-      this.isAuthenticated = !this.isAuthenticated;
+    routeToLogin() {
+      this.$router.push("/login")
+    },
+    logout() {
+      this.authStore.logout()
+      this.$router.push("/")
+      window.location.reload()
     }
   }
 };

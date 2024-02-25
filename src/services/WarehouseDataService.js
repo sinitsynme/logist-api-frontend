@@ -1,24 +1,24 @@
-import http from "../http-common";
+import logapiAxios from "../http-common";
 
 class WarehouseDataService {
     get(id) {
-        return http.get(`/warehouse/rest/api/v1/warehouse/${id}`);
+        return logapiAxios.get(`/warehouse/rest/api/v1/warehouse/${id}`);
     }
 
     getPage(page, size) {
-        return http.get(`/warehouse/rest/api/v1/warehouse?page=${page}&size=${size}`);
+        return logapiAxios.get(`/warehouse/rest/api/v1/warehouse?page=${page}&size=${size}`);
     }
 
     create(warehouse) {
-        return http.post(`/warehouse/rest/api/v1/warehouse`, warehouse);
+        return logapiAxios.post(`/warehouse/rest/api/v1/warehouse`, warehouse);
     }
 
     edit(warehouse, id) {
-        return http.put(`/warehouse/rest/api/v1/warehouse/${id}`, warehouse)
+        return logapiAxios.put(`/warehouse/rest/api/v1/warehouse/${id}`, warehouse)
     }
 
     delete(id) {
-        return http.delete(`/warehouse/rest/api/v1/warehouse/${id}`)
+        return logapiAxios.delete(`/warehouse/rest/api/v1/warehouse/${id}`)
     }
 
 }

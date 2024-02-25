@@ -55,8 +55,11 @@ export default {
   components: {AuthComponent},
   data() {
     return {
-      searchQuery: ''
+      searchQuery: '',
+      todoTitle: '',
     }
+  },
+  mounted() {
   },
   methods: {
     searchProducts() {

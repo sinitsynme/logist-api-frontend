@@ -104,7 +104,7 @@
 
 <script>
 
-import MapComponent from "@/components/warehouse/map/MapComponent.vue";
+import MapComponent from "@/components/admin/warehouse/map/MapComponent.vue";
 import WarehouseDataService from "@/services/WarehouseDataService";
 
 export default {

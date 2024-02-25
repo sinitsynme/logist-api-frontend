@@ -1,24 +1,24 @@
-import http from "../http-common";
+import logapiAxios from "../http-common";
 
 class ProductCategoryService {
     get(categoryName) {
-        return http.get(`/product/rest/api/v1/product/category/${categoryName}`);
+        return logapiAxios.get(`/product/rest/api/v1/product/category/${categoryName}`);
     }
 
     getPage(page, size) {
-        return http.get(`/product/rest/api/v1/product/category?page=${page}&size=${size}`);
+        return logapiAxios.get(`/product/rest/api/v1/product/category?page=${page}&size=${size}`);
     }
 
     create(manufacturer) {
-        return http.post(`/product/rest/api/v1/product/category`, manufacturer);
+        return logapiAxios.post(`/product/rest/api/v1/product/category`, manufacturer);
     }
 
     edit(manufacturer, categoryName) {
-        return http.put(`/product/rest/api/v1/product/category/${categoryName}`, manufacturer)
+        return logapiAxios.put(`/product/rest/api/v1/product/category/${categoryName}`, manufacturer)
     }
 
     delete(categoryName) {
-        return http.delete(`/product/rest/api/v1/product/category/${categoryName}`)
+        return logapiAxios.delete(`/product/rest/api/v1/product/category/${categoryName}`)
     }
 
 }
