@@ -54,7 +54,8 @@ export default {
     async login() {
       try {
         await this.authStore.login(this.email, document.getElementById("passwordInput").value)
-        this.$router.push("/")
+        await this.$router.push("/")
+        window.location.reload()
       } catch (err) {
         this.showInvalidCredsAlert = true
         console.log(err)

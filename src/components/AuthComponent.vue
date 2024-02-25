@@ -24,11 +24,11 @@ export default {
   },
   computed: {
     isAuthenticated() {
-      return this.authStore.isAuthenticated
+      return this.authStore.user.isAuthenticated
     },
 
     email() {
-      return this.authStore.userEmail
+      return this.authStore.user.userEmail
     }
   },
   methods: {

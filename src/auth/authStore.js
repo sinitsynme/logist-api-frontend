@@ -6,32 +6,53 @@ function parseJwt(token) {
     return jwtDecode(token)
 }
 
+function unauthorizedUser() {
+    return {
+        isAuthenticated: false,
+        userEmail: '',
+        userId: '',
+        jwtPair: null,
+        userRoles: ['UNAUTHORIZED']
+    }
+}
+
+function getUserFromLocalStorage() {
+    let userData = localStorage.getItem("user")
+    if (userData === null || userData === "{}") {
+        return unauthorizedUser()
+    }
+    else return JSON.parse(userData)
+}
+
 export const useAuthStore = defineStore('authStore', {
     state: () => (
         {
-            isAuthenticated: false,
-            userEmail: '',
-            userId: '',
-            jwtPair: null,
-            userRoles: ['UNAUTHORIZED']
+            user: getUserFromLocalStorage()
         }
     ),
     actions: {
         async login(email, password) {
-            this.jwtPair = (await AuthDataService.getToken(email, password)).data
-            const decodedJwt = parseJwt(this.jwtPair.accessToken)
-            this.userEmail = decodedJwt.sub
-            this.userId = decodedJwt.user_id
-            this.userRoles = decodedJwt.authorities
-            this.isAuthenticated = true
+            const jwtPair = (await AuthDataService.getToken(email, password)).data
+            const decodedJwt = parseJwt(jwtPair.accessToken)
+
+            const userEmail = decodedJwt.sub
+            const userId = decodedJwt.user_id
+            const userRoles = decodedJwt.authorities
+            const isAuthenticated = true
+
+            let userData = {
+                jwtPair,
+                userRoles,
+                userEmail,
+                userId,
+                isAuthenticated
+            }
+
+            localStorage.setItem("user", JSON.stringify(userData))
         },
 
         logout() {
-            this.jwtPair = null
-            this.isAuthenticated = false
-            this.userRoles = ['UNAUTHORIZED']
-            this.userId = ''
-            this.userEmail = ''
+            localStorage.setItem("user", "{}")
         }
     }
 })
