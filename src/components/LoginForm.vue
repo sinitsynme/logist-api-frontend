@@ -7,27 +7,24 @@
       <form @submit.prevent="onsubmit">
         <div class="form-group">
           <label for="categoryCode">Адрес электронной почты</label>
-          <input v-model="email" type="text" class="form-control" id="email"
-                 placeholder="Имя пользователя">
+          <input v-model="email" type="email" class="form-control" id="email"
+                 placeholder="E-mail">
         </div>
         <div class="form-group">
           <label for="categoryName">Пароль</label>
-          <input type="password" class="form-control" id="passwordInput"
+          <input v-model="password" type="password" class="form-control" id="passwordInput"
                  placeholder="Пароль">
         </div>
 
         <div class="text-center">
-          <button type="submit" class="btn btn-primary" @click="login">Войти в систему</button>
+          <button type="submit" class="btn btn-primary"
+                  @click="login" :disabled="!isActiveLoginButton">Войти в систему</button>
         </div>
 
-        <div class="text-center mt-4" v-if="showInvalidCredsAlert">
-          <div class="alert alert-danger" role="alert">
-            Неверное имя пользователя или пароль
-          </div>
-        </div>
+        <AlertComponent :message="alertMessage" v-if="showInvalidCredsAlert"/>
 
         <div class="text-center mt-4">
-          Или <a href="">зарегистрироваться (поправить ссылку)</a>
+          Или <a class="link-primary" @click="routeToSignup">зарегистрироваться в СкладЛайн</a>
         </div>
       </form>
     </div>
@@ -37,29 +34,48 @@
 <script>
 
 import {useAuthStore} from "@/auth/authStore";
+import AlertComponent from "@/components/AlertComponent.vue";
 
 export default {
   name: "loginForm",
+  components: {AlertComponent},
   mounted() {
   },
+
   data() {
     return {
       authStore: useAuthStore(),
       email: '',
-      showInvalidCredsAlert: false
+      password: '',
+      showInvalidCredsAlert: false,
+      alertMessage: ''
+    }
+  },
+
+  computed: {
+    isActiveLoginButton() {
+      return this.email.length > 0 &&
+          this.password.length > 0
     }
   },
 
   methods: {
     async login() {
       try {
-        await this.authStore.login(this.email, document.getElementById("passwordInput").value)
+        this.showInvalidCredsAlert = false
+
+        await this.authStore.login(this.email, this.password)
         await this.$router.push("/")
         window.location.reload()
       } catch (err) {
         this.showInvalidCredsAlert = true
+        this.alertMessage = "Неверный e-mail или пароль"
         console.log(err)
       }
+    },
+
+    routeToSignup() {
+      this.$router.push("/signup")
     }
   }
 }

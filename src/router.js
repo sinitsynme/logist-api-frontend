@@ -10,8 +10,26 @@ const routes =  [
   {
     path: "/login",
     alias: "/login",
-    name: "login-page",
+    name: "login",
     component: () => import("./components/LoginForm.vue")
+  },
+  {
+    path: "/signup",
+    alias: "/signup",
+    name: "signup",
+    component: () => import("./components/personal/SignupForm.vue")
+  },
+  {
+    path: "/personalCabinet",
+    alias: "/personalCabinet",
+    name: "personalCabinet",
+    component: () => import("./components/personal/PersonalCabinet.vue")
+  },
+  {
+    path: "/personalCabinet/edit",
+    alias: "/personalCabinet/edit",
+    name: "personalCabinetEdit",
+    component: () => import("./components/personal/PersonalDataEditForm.vue")
   },
   {
     path: "/manufacturer",

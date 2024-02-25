@@ -22,7 +22,7 @@
         </li>
       </div>
 
-      <form class="navbar-form mr-auto d-flex" role="search" @submit.prevent="onsubmit">
+      <form class="d-flex" role="search" @submit.prevent="onsubmit">
         <input v-model="searchQuery" class="form-control me-2 col-lg-8" type="search" placeholder="Найти товар"
                aria-label="Найти товар" size="45">
         <router-link to="product-search">
@@ -34,9 +34,7 @@
         </router-link>
       </form>
 
-      <div class="navbar ml-auto">
-        <AuthComponent/>
-      </div>
+      <AuthComponent class="navbar ml-auto"/>
     </nav>
 
     <div>

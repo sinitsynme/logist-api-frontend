@@ -1,5 +1,4 @@
 import axios from "axios";
-import {useAuthStore} from "@/auth/authStore";
 
 let logapiAxios = axios.create({
   baseURL: "http://localhost:8000/",
@@ -9,7 +8,7 @@ let logapiAxios = axios.create({
 });
 
 logapiAxios.interceptors.request.use((request) => {
-  let jwtPair = useAuthStore().jwtPair
+  let jwtPair = JSON.parse(localStorage.getItem("user")).jwtPair
   if (jwtPair != null) {
     request.headers.Authorization = `Bearer ${jwtPair.accessToken}`
   }
