@@ -1,30 +1,11 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand bg-light">
-      <router-link to="/">
-        <img :src="require('./assets/long-logo.png')" width="250" alt="СкладЛайн">
-      </router-link>
-      <div class="navbar-nav mr-lg-5">
-        <li class="nav-item">
-          <router-link to="/organization" class="nav-link">Предприятия</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/warehouse" class="nav-link">Склады</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/manufacturer" class="nav-link">Производители</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/productCategory" class="nav-link">Категории товаров</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/product" class="nav-link">Товары</router-link>
-        </li>
-      </div>
+      <NavbarItems/>
 
-      <form class="d-flex" role="search" @submit.prevent="onsubmit">
+      <form class="d-flex ml-auto" role="search" @submit.prevent="onsubmit">
         <input v-model="searchQuery" class="form-control me-2 col-lg-8" type="search" placeholder="Найти товар"
-               aria-label="Найти товар" size="45">
+               aria-label="Найти товар" size="50">
         <router-link to="product-search">
         </router-link>
         <router-link :to="{
@@ -47,10 +28,11 @@
 <script>
 
 import AuthComponent from "@/components/AuthComponent.vue";
+import NavbarItems from "@/components/NavbarItems.vue";
 
 export default {
   name: "app",
-  components: {AuthComponent},
+  components: {NavbarItems, AuthComponent},
   data() {
     return {
       searchQuery: '',
