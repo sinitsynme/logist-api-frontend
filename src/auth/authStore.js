@@ -24,6 +24,25 @@ function getUserFromLocalStorage() {
     else return JSON.parse(userData)
 }
 
+function setUserInLocalStorage(jwtPair) {
+    const decodedJwt = parseJwt(jwtPair.accessToken)
+
+    const userEmail = decodedJwt.sub
+    const userId = decodedJwt.user_id
+    const userRoles = decodedJwt.authorities
+    const isAuthenticated = true
+
+    let userData = {
+        jwtPair,
+        userRoles,
+        userEmail,
+        userId,
+        isAuthenticated
+    }
+
+    localStorage.setItem("user", JSON.stringify(userData))
+}
+
 export const useAuthStore = defineStore('authStore', {
     state: () => (
         {
@@ -33,22 +52,13 @@ export const useAuthStore = defineStore('authStore', {
     actions: {
         async login(email, password) {
             const jwtPair = (await AuthDataService.getToken(email, password)).data
-            const decodedJwt = parseJwt(jwtPair.accessToken)
+            setUserInLocalStorage(jwtPair)
+        },
 
-            const userEmail = decodedJwt.sub
-            const userId = decodedJwt.user_id
-            const userRoles = decodedJwt.authorities
-            const isAuthenticated = true
-
-            let userData = {
-                jwtPair,
-                userRoles,
-                userEmail,
-                userId,
-                isAuthenticated
-            }
-
-            localStorage.setItem("user", JSON.stringify(userData))
+        async refreshToken(jwtPair) {
+            let refreshToken = jwtPair.refreshToken
+            const refreshedJwtPair =  (await AuthDataService.refreshToken(refreshToken)).data
+            setUserInLocalStorage(refreshedJwtPair)
         },
 
         logout() {
