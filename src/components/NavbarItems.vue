@@ -1,8 +1,8 @@
 <template>
   <div class="navbar-nav">
     <router-link to="/">
-      <img v-if="shopMode" :src="require('../assets/long-logo.png')" width="250" alt="СкладЛайн">
-      <img v-if="managementMode" :src="require('../assets/management-long-logo.png')" width="250"
+      <img v-if="isShopMode" :src="require('../assets/long-logo.png')" width="250" alt="СкладЛайн">
+      <img v-if="isManagementMode" :src="require('../assets/management-long-logo.png')" width="250"
            alt="СкладЛайн Менеджмент">
     </router-link>
 
@@ -14,11 +14,11 @@
       <router-link :to="managementNavItems[item]" class="nav-link"> {{ item }}</router-link>
     </li>
 
-    <li class="ml-3" @click="changeMode" v-if="shopMode && managementModeEnabled">
+    <li class="ml-3" @click="changeMode" v-if="isShopMode && hasAccessToManagement">
       <a class="alert-link">Перейти в СкладЛайн Менеджмент</a>
     </li>
 
-    <li class="ml-3" @click="changeMode" v-if="managementMode">
+    <li class="ml-3" @click="changeMode" v-if="isManagementMode">
       <a class="alert-link">Вернуться в СкладЛайн</a>
     </li>
 
@@ -27,29 +27,33 @@
 
 <script>
 
-import {useAuthStore} from "@/auth/authStore";
+import {useAuthStore} from "@/stores/authStore";
 import {getAllNavItems} from "@/auth/navbar"
+import {MODE_MANAGEMENT, MODE_SHOP, useModeStore} from "@/stores/modeStore";
 
 export default {
   name: "NavbarItems",
   props: {},
   data() {
     return {
-      authStore: useAuthStore(),
-      mode: "shop"
+      modeStore: useModeStore(),
+      authStore: useAuthStore()
     }
   },
   computed: {
+    mode() {
+      return this.modeStore.mode
+    },
     links() {
       return this.getNavItemLinks()
     },
     shopLinksKeys() {
-      if (this.managementMode) {
+      if (this.isManagementMode) {
         return []
       } else return Object.keys(this.shopNavItems)
     },
     managementLinksKeys() {
-      if (this.shopMode) {
+      if (this.isShopMode) {
         return []
       } else return Object.keys(this.managementNavItems)
     },
@@ -59,13 +63,13 @@ export default {
     managementNavItems() {
       return this.links.management
     },
-    shopMode() {
-      return this.mode === "shop"
+    isShopMode() {
+      return this.modeStore.isShopMode()
     },
-    managementMode() {
-      return this.mode === "management"
+    isManagementMode() {
+      return this.modeStore.isManagementMode()
     },
-    managementModeEnabled() {
+    hasAccessToManagement() {
       return this.managementNavItems != null
     }
   },
@@ -74,12 +78,13 @@ export default {
       return getAllNavItems(this.authStore.user.userRoles)
     },
     changeMode() {
-      if (this.mode === 'shop') {
-        this.mode = "management"
-      } else {
-        this.mode = "shop"
+      if (this.isShopMode) {
+        this.modeStore.setMode(MODE_MANAGEMENT)
+      } else if (this.isManagementMode) {
+        this.modeStore.setMode(MODE_SHOP)
       }
       this.$router.push("/")
+      window.location.reload()
     }
   }
 };

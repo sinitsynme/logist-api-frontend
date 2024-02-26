@@ -41,6 +41,9 @@ const headerMappings = {
         }
     },
     "ROLE_ADMIN": {
+        "management": {
+            "Панель администратора": "/admin"
+        }
     }
 }
 

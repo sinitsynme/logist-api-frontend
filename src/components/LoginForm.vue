@@ -33,7 +33,7 @@
 
 <script>
 
-import {useAuthStore} from "@/auth/authStore";
+import {useAuthStore} from "@/stores/authStore";
 import AlertComponent from "@/components/AlertComponent.vue";
 
 export default {
