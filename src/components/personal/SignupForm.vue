@@ -64,7 +64,7 @@
 
 <script>
 
-import AlertComponent from "@/components/AlertComponent.vue";
+import AlertComponent from "@/components/common/AlertComponent.vue";
 import AuthDataService from "@/auth/AuthDataService";
 
 export default {

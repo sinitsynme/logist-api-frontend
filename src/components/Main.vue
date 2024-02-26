@@ -1,18 +1,48 @@
 <template>
-  <div class="container text-center mt-5">
+  <div class="d-flex mt-5 justify-content-around">
 
-    <h1>Панель администратора "СкладЛайн Менеджмент"</h1>
-    <div class="container w-50 mt-5">
-      <img :src="require('../assets/management-long-logo.png')" alt="СкладЛайн" class="img-fluid">
+    <div v-if="isShopMode" class="d-flex justify-content-around">
+        <img :src="require('../assets/long-logo.png')" alt="СкладЛайн" style="max-width: 35%">
+      <div class="text-center">
+        <h1>СкладЛайн</h1>
+        <h2>Лучшая платформа для оптовых B2B-закупок</h2>
+      </div>
     </div>
 
-<!--    <h2 class="mt-5">Войдите, чтобы продолжить</h2>-->
+    <div v-if="isManagementMode" class="d-flex justify-content-around">
+        <img :src="require('../assets/management-long-logo.png')" alt="СкладЛайн Менеджмент" style="max-width: 35%">
+      <div class="text-center">
+        <h1>СкладЛайн Менеджмент</h1>
+        <h2>Панель управления</h2>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 
+import {useModeStore} from "@/stores/modeStore";
+
 export default {
-  name: "Main"
+  name: "Main",
+  props: {},
+  data() {
+    return {
+      modeStore: useModeStore(),
+    }
+  },
+  computed: {
+    mode() {
+      return this.modeStore.mode
+    },
+    isShopMode() {
+      return this.modeStore.isShopMode()
+    },
+    isManagementMode() {
+      return this.modeStore.isManagementMode()
+    }
+  },
+  methods: {}
+
 }
 </script>

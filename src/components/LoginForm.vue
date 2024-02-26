@@ -34,7 +34,7 @@
 <script>
 
 import {useAuthStore} from "@/stores/authStore";
-import AlertComponent from "@/components/AlertComponent.vue";
+import AlertComponent from "@/components/common/AlertComponent.vue";
 
 export default {
   name: "loginForm",

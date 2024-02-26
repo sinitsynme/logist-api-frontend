@@ -1,25 +1,27 @@
-<template class="d-inline">
+<template>
   <div v-if="!isAuthenticated">
     <button class="btn btn-outline-info" @click="routeToLogin">Войти</button>
   </div>
-  <div v-else>
-    <div>
+  <div v-else class="d-flex align-items-center">
+    <div class="align-self-center">
       <b class="text-info mr-2">{{ email }}</b>
-      <p><a class="link-primary" @click="routeToPersonalCabinet">Личный кабинет</a></p>
+      <div class="text-center"><a class="link-primary" @click="routeToPersonalCabinet">Личный кабинет</a></div>
     </div>
-    <button class="btn btn-outline-danger" @click="logout">Выйти</button>
+    <button class="btn btn-outline-danger flex-wrap" @click="logout">Выйти</button>
   </div>
 </template>
 
 <script>
 
 import {useAuthStore} from "@/stores/authStore";
+import {MODE_SHOP, useModeStore} from "@/stores/modeStore";
 
 export default {
   name: "AuthComponent",
   props: {},
   data() {
     return {
+      modeStore: useModeStore(),
       authStore: useAuthStore(),
     }
   },
@@ -41,6 +43,7 @@ export default {
     },
     async logout() {
       this.authStore.logout()
+      this.modeStore.setMode(MODE_SHOP)
       await this.$router.push("/")
       window.location.reload()
     }
