@@ -10,59 +10,77 @@ const routes =  [
   {
     path: "/login",
     alias: "/login",
-    name: "login-page",
+    name: "login",
     component: () => import("./components/LoginForm.vue")
+  },
+  {
+    path: "/signup",
+    alias: "/signup",
+    name: "signup",
+    component: () => import("./components/personal/SignupForm.vue")
+  },
+  {
+    path: "/personalCabinet",
+    alias: "/personalCabinet",
+    name: "personalCabinet",
+    component: () => import("./components/personal/PersonalCabinet.vue")
+  },
+  {
+    path: "/personalCabinet/edit",
+    alias: "/personalCabinet/edit",
+    name: "personalCabinetEdit",
+    component: () => import("./components/personal/PersonalDataEditForm.vue")
   },
   {
     path: "/manufacturer",
     alias: "/manufacturer-list",
     name: "manufacturer-list",
-    component: () => import("./components/manufacturer/ManufacturerList.vue")
+    component: () => import("./components/admin/manufacturer/ManufacturerList.vue")
   },
   {
     path: "/manufacturer/:id",
     name: "manufacturer",
     props: true,
-    component: () => import("./components/manufacturer/Manufacturer.vue")
+    component: () => import("./components/admin/manufacturer/Manufacturer.vue")
   },
   {
     path: "/manufacturerCreate",
     name: "manufacturerForm",
-    component: () => import("./components/manufacturer/ManufacturerForm.vue")
+    component: () => import("./components/admin/manufacturer/ManufacturerForm.vue")
   },
   {
     path: "/manufacturerEdit/:id",
     name: "manufacturerFormEdit",
     props: true,
-    component: () => import("./components/manufacturer/ManufacturerEditForm.vue")
+    component: () => import("./components/admin/manufacturer/ManufacturerEditForm.vue")
   },
   {
     path: "/productCategory",
     name: "productCategoryList",
-    component: () => import("./components/product_category/ProductCategoryList.vue")
+    component: () => import("./components/admin/product_category/ProductCategoryList.vue")
   },
   {
     path: "/productCategory/:code",
     name: "productCategory",
     props: true,
-    component: () => import("./components/product_category/ProductCategory.vue")
+    component: () => import("./components/admin/product_category/ProductCategory.vue")
   },
   {
     path: "/productCategoryCreate",
     name: "productCategoryForm",
-    component: () => import("./components/product_category/ProductCategoryForm.vue")
+    component: () => import("./components/admin/product_category/ProductCategoryForm.vue")
   },
   {
     path: "/productCategoryEdit/:code",
     name: "productCategoryFormEdit",
     props: true,
-    component: () => import("./components/product_category/ProductCategoryEditForm.vue")
+    component: () => import("./components/admin/product_category/ProductCategoryEditForm.vue")
   },
   {
     path: "/product",
     alias: "/product-list",
     name: "product-list",
-    component: () => import("./components/product/ProductList.vue")
+    component: () => import("./components/admin/product/ProductList.vue")
   },
   {
     path: "/product/search",
@@ -71,88 +89,88 @@ const routes =  [
     meta: {
       refresh: true
     },
-    component: () => import("./components/product/ProductSearchResult.vue")
+    component: () => import("./components/admin/product/ProductSearchResult.vue")
   },
   {
     path: "/product/:id",
     name: "product",
     props: true,
-    component: () => import("./components/product/Product.vue")
+    component: () => import("./components/admin/product/Product.vue")
   },
   {
     path: "/productCreate",
     name: "productForm",
-    component: () => import("./components/product/ProductForm.vue")
+    component: () => import("./components/admin/product/ProductForm.vue")
   },
   {
     path: "/productEdit/:id",
     name: "productFormEdit",
     props: true,
-    component: () => import("./components/product/ProductEditForm.vue")
+    component: () => import("./components/admin/product/ProductEditForm.vue")
   },
   {
     path: "/organization",
     alias: "/organization-list",
     name: "organization-list",
-    component: () => import("./components/organization/OrganizationList.vue")
+    component: () => import("./components/admin/organization/OrganizationList.vue")
   },
   {
     path: "/organization/:id",
     name: "organization",
     props: true,
-    component: () => import("./components/organization/Organization.vue")
+    component: () => import("./components/admin/organization/Organization.vue")
   },
   {
     path: "/organizationCreate",
     name: "organizationForm",
-    component: () => import("./components/organization/OrganizationForm.vue")
+    component: () => import("./components/admin/organization/OrganizationForm.vue")
   },
   {
     path: "/organizationEdit/:id",
     name: "organizationFormEdit",
     props: true,
-    component: () => import("./components/organization/OrganizationEditForm.vue")
+    component: () => import("./components/admin/organization/OrganizationEditForm.vue")
   },
   {
     path: "/warehouse",
     alias: "/warehouse-list",
     name: "warehouse-list",
-    component: () => import("./components/warehouse/WarehouseList.vue")
+    component: () => import("./components/admin/warehouse/WarehouseList.vue")
   },
   {
     path: "/warehouse/:id",
     name: "warehouse",
     props: true,
-    component: () => import("./components/warehouse/Warehouse.vue")
+    component: () => import("./components/admin/warehouse/Warehouse.vue")
   },
   {
     path: "/warehouseCreate",
     name: "warehouseForm",
-    component: () => import("./components/warehouse/WarehouseForm.vue")
+    component: () => import("./components/admin/warehouse/WarehouseForm.vue")
   },
   {
     path: "/warehouseEdit/:id",
     name: "warehouseFormEdit",
     props: true,
-    component: () => import("./components/warehouse/WarehouseEditForm.vue")
+    component: () => import("./components/admin/warehouse/WarehouseEditForm.vue")
   },
   {
     path: "/storedProduct/warehouse/:warehouseId",
     name: "storedProductList",
     props: true,
-    component: () => import("./components/stored_product/ProductInWarehouseList.vue")
+    component: () => import("./components/admin/stored_product/ProductInWarehouseList.vue")
   },
   {
     path: "/storedProduct/:productId/:warehouseId",
     name: "storedProduct",
     props: true,
-    component: () => import("./components/stored_product/ProductInWarehouse.vue")
+    component: () => import("./components/admin/stored_product/ProductInWarehouse.vue")
   },
   {
     path: "/addStoredProduct/:warehouseId",
     name: "addStoredProduct",
     props: true,
-    component: () => import("./components/stored_product/AddStoredProduct.vue")
+    component: () => import("./components/admin/stored_product/AddStoredProduct.vue")
   },
 ];
 

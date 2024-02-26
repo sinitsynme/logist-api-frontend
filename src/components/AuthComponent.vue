@@ -1,28 +1,48 @@
-<template>
+<template class="d-inline">
   <div v-if="!isAuthenticated">
-    <button class="btn btn-outline-info" @click="auth">Войти</button>
+    <button class="btn btn-outline-info" @click="routeToLogin">Войти</button>
   </div>
-  <div class="d-block" v-else>
-    <b class="text-info mr-2">m.sinitsyn</b>
-    <button class="btn btn-outline-danger" @click="auth">Выйти</button>
+  <div v-else>
+    <div>
+      <b class="text-info mr-2">{{ email }}</b>
+      <p><a class="link-primary" @click="routeToPersonalCabinet">Личный кабинет</a></p>
+    </div>
+    <button class="btn btn-outline-danger" @click="logout">Выйти</button>
   </div>
 </template>
 
 <script>
+
+import {useAuthStore} from "@/auth/authStore";
+
 export default {
   name: "AuthComponent",
-  props: {
-
-  },
+  props: {},
   data() {
     return {
-      isAuthenticated: false
+      authStore: useAuthStore(),
+    }
+  },
+  computed: {
+    isAuthenticated() {
+      return this.authStore.user.isAuthenticated
+    },
+
+    email() {
+      return this.authStore.user.userEmail
     }
   },
   methods: {
-    auth() {
-      //mock auth for now
-      this.isAuthenticated = !this.isAuthenticated;
+    routeToLogin() {
+      this.$router.push("/login")
+    },
+    routeToPersonalCabinet() {
+      this.$router.push("/personalCabinet")
+    },
+    async logout() {
+      this.authStore.logout()
+      await this.$router.push("/")
+      window.location.reload()
     }
   }
 };
