@@ -117,7 +117,7 @@ export default {
           .getBySearchQuery(0, 15, query)
           .then(response => {
             this.products = response.data.content
-            console.log(response.data);
+            console.log(response.data.content);
 
             this.products = this.fillProductsWithImages(this.products)
           })

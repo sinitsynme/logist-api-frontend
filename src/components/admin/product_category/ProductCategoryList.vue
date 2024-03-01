@@ -67,8 +67,8 @@ export default {
       ProductCategoryDataService
           .getPage(0, 15)
           .then(response => {
-            this.productCategories = response.data
-            console.log(response.data);
+            this.productCategories = response.data.content
+            console.log(response.data.content);
           })
           .catch(e => {
             console.log(e);

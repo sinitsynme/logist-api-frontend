@@ -142,7 +142,7 @@ export default {
           .getPage(0, 15, this.warehouseId)
           .then(response => {
                 console.log(response)
-                let storedProducts = response.data
+                let storedProducts = response.data.content
                 storedProducts.forEach((it) => {
                   if (it.quantity === 0) return
                   this.getProduct(it)
