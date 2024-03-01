@@ -1,4 +1,4 @@
-import logapiAxios from "../http-common";
+import logapiAxios from "../axios/http-common";
 
 class StoredProductDataService {
     get(productId, warehouseId) {

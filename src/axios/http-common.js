@@ -22,6 +22,8 @@ let logapiAxios = axios.create({
     }
 });
 
+
+
 logapiAxios.interceptors.request.use((request) => {
     let jwtPair = JSON.parse(localStorage.getItem("user")).jwtPair
     if (jwtPair != null) {

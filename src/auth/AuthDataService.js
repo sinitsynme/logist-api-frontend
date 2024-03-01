@@ -1,12 +1,13 @@
-import logapiAxios from "../http-common";
+import logapiAxios from "../axios/http-common";
+import axiosWithoutInterceptor from "@/axios/axiosWithoutInterceptor";
 
 class AuthDataService {
     async getToken(email, password) {
-        return logapiAxios.post(`/auth/rest/api/v1/token`, {email, password})
+        return axiosWithoutInterceptor.post(`/auth/rest/api/v1/token`, {email, password})
     }
 
     async refreshToken(refreshToken) {
-        return logapiAxios.post('/auth/rest/api/v1/token/refresh', {refreshToken})
+        return axiosWithoutInterceptor.post('/auth/rest/api/v1/token/refresh', {refreshToken})
     }
 
     async register(user) {
