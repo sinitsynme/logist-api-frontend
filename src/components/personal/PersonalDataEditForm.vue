@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import {useAuthStore} from "@/auth/authStore";
+import {useAuthStore} from "@/stores/authStore";
 import AuthDataService from "@/auth/AuthDataService";
-import AlertComponent from "@/components/AlertComponent.vue";
+import AlertComponent from "@/components/common/AlertComponent.vue";
 
 export default {
   name: "PersonalDataEditForm",

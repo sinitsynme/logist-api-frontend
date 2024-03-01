@@ -1,5 +1,5 @@
 import axios from "axios";
-import {useAuthStore} from "@/auth/authStore";
+import {useAuthStore} from "@/stores/authStore";
 
 function refreshTokenIfNeeded(jwtPair) {
     let authStore = useAuthStore()
@@ -21,6 +21,8 @@ let logapiAxios = axios.create({
         "Content-type": "application/json",
     }
 });
+
+
 
 logapiAxios.interceptors.request.use((request) => {
     let jwtPair = JSON.parse(localStorage.getItem("user")).jwtPair
