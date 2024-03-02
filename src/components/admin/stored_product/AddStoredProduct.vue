@@ -16,9 +16,14 @@
                  placeholder="ID склада">
         </div>
         <div class="form-group">
-          <label for="quantity">Количество</label>
-          <input v-model="quantity" type="text" class="form-control" id="quantity"
-                 placeholder="Количество товара">
+          <label for="quantum">Квант (кратность) товара</label>
+          <input v-model="quantum" type="text" class="form-control" id="quantum"
+                 placeholder="Квант (кратность) товара">
+        </div>
+        <div class="form-group">
+          <label for="price">Стоимость</label>
+          <input v-model="price" type="text" class="form-control" id="price"
+                 placeholder="Стоимость">
         </div>
 
         <div class="text-center">
@@ -43,8 +48,9 @@ export default {
   data() {
     return {
       productId: '',
-      quantity: 0,
-      warehouseMutableId: this.warehouseId
+      quantum: 1,
+      warehouseMutableId: this.warehouseId,
+      price: 0.00
     }
   },
 
@@ -54,7 +60,8 @@ export default {
 
         productId: this.productId,
         warehouseId: this.warehouseMutableId,
-        quantity: this.quantity
+        quantum: this.quantum,
+        price: this.price
       }
 
       if (this.quantity < 1) {
@@ -64,8 +71,9 @@ export default {
       }
 
       StoredProductDataService
-          .addProductToWarehouse(requestBody)
+          .registerProductInWarehouse(requestBody)
           .then(() => this.$router.push(`/storedProduct/${this.productId}/${this.warehouseMutableId}`))
+          .catch(e => console.log(e))
     }
   }
 }

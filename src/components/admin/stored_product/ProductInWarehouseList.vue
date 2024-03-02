@@ -1,8 +1,8 @@
 <template>
 
-  <div class="container mt-2">
-    <div class="d-flex justify-content-between text-center">
-      <span>Список всех товаров на складе {{ warehouseId }}</span>
+  <div class=" mt-2">
+    <div class="d-flex justify-content-between ml-5 mr-5">
+      <span>Список всех товаров на складе {{ warehouseName }}</span>
 
       <router-link :to="{
               name: 'addStoredProduct',
@@ -10,7 +10,7 @@
                code: warehouseId
              }
               }">
-        <button class="btn btn-outline-primary mt-3">Принять товар</button>
+        <button class="btn btn-outline-primary mt-3">Зарегистрировать товар на складе</button>
       </router-link>
 
     </div>
