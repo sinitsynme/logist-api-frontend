@@ -1,5 +1,6 @@
 import axios from "axios";
 import {useAuthStore} from "@/stores/authStore";
+import router from "@/router";
 
 function refreshTokenIfNeeded(jwtPair) {
     let authStore = useAuthStore()
@@ -10,7 +11,11 @@ function refreshTokenIfNeeded(jwtPair) {
         if (now > refreshTokenExpiresAt) {
             authStore.logout()
         }
-        authStore.refreshToken(jwtPair).catch(e => console.log(e))
+        authStore.refreshToken(jwtPair).catch(e => {
+            console.log(e)
+            authStore.logout()
+            router.push("/login")
+        })
     }
 }
 

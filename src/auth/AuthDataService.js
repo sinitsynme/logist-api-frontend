@@ -7,7 +7,7 @@ class AuthDataService {
     }
 
     async refreshToken(refreshToken) {
-        return axiosWithoutInterceptor.post('/auth/rest/api/v1/token/refresh', {refreshToken})
+        return axiosWithoutInterceptor.post(`/auth/rest/api/v1/token/refresh?refreshToken=${refreshToken}`)
     }
 
     async register(user) {
