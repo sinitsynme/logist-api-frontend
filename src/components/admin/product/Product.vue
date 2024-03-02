@@ -74,14 +74,6 @@
         </tr>
         <tr>
           <td>
-            <b>Стоимость, ₽</b>
-          </td>
-          <td>
-            {{ product.price }}
-          </td>
-        </tr>
-        <tr>
-          <td>
             <b>Вес</b>
           </td>
           <td>
@@ -94,14 +86,6 @@
           </td>
           <td>
             {{ product.volume }}
-          </td>
-        </tr>
-        <tr v-if="product.isPackaged">
-          <td>
-            <b>Количество товара в упаковке</b>
-          </td>
-          <td>
-            {{ product.quantityInPackage }}
           </td>
         </tr>
         </tbody>
@@ -158,11 +142,8 @@ export default {
         description: '',
         category: '',
         manufacturer: '',
-        price: '',
         weight: '',
         volume: '',
-        isPackaged: false,
-        quantityInPackage: 1
       },
       isImageLoadSectionOpen: false,
       productPhoto: {}
@@ -180,11 +161,8 @@ export default {
             this.product.description = data.description
             this.product.category = data.productCategory
             this.product.manufacturer = data.manufacturer
-            this.product.price = data.price
             this.product.weight = data.weight
             this.product.volume = data.volume
-            this.product.isPackaged = data.isPackaged
-            this.product.quantityInPackage = data.quantityInPackage
             this.addImageLinkForProduct()
           })
           .catch(e => {

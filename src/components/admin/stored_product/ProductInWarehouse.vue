@@ -82,6 +82,14 @@
         </tr>
         <tr>
           <td>
+            <b>Квант (кратность в заказе)</b>
+          </td>
+          <td>
+            {{ storedProduct.quantum }}
+          </td>
+        </tr>
+        <tr>
+          <td>
             <b>Доступно для резерва</b>
           </td>
           <td>
@@ -170,6 +178,7 @@ export default {
         name: '',
         description: '',
         price: 0,
+        quantum: 0,
         quantity: 0,
         reservedQuantity: 0,
         availableForReserveQuantity: 0,
@@ -186,6 +195,8 @@ export default {
             this.storedProduct.quantity = data.quantity
             this.storedProduct.reservedQuantity = data.reservedQuantity
             this.storedProduct.availableForReserveQuantity = data.availableForReserveQuantity
+            this.storedProduct.price = data.price
+            this.storedProduct.quantum = data.quantum
             this.getProduct()
           })
     },
@@ -204,7 +215,6 @@ export default {
             console.log(this.storedProduct.categoryCode)
             this.storedProduct.manufacturerId = data.manufacturer.id
             this.storedProduct.manufacturer = data.manufacturer.name
-            this.storedProduct.price = data.price
             this.addImageLinkForProduct()
           })
           .catch(e => {

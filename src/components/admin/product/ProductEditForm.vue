@@ -23,11 +23,6 @@
                placeholder="ID производителя">
       </div>
       <div class="form-group">
-        <label for="productPrice">Стоимость</label>
-        <input v-model="product.price" type="number" step="0.01" class="form-control" id="productPrice"
-               placeholder="Стоимость">
-      </div>
-      <div class="form-group">
         <label for="productWeight">Вес</label>
         <input v-model="product.weight" type="number" step="0.001" class="form-control" id="productWeight"
                placeholder="Вес">
@@ -38,18 +33,6 @@
                placeholder="Объем">
       </div>
 
-      <div class="form-check">
-        <input v-model="product.isPackaged" type="checkbox" class="form-check-input" id="productIsPackaged">
-        <label for="productIsPackaged" class="form-check-label">Несколько товаров в упаковке?</label>
-      </div>
-
-      <div v-if="product.isPackaged">
-        <div>
-          <label for="productQuantityInPackage">Количество единиц внутри упаковки</label>
-          <input v-model="product.quantityInPackage" type="number" class="form-control" id="productQuantityInPackage"
-                 placeholder="Количество единиц внутри упаковки">
-        </div>
-      </div>
       <div class="text-center mt-3">
         <button type="submit" class="btn btn-primary" @click="editProduct(product, id)">Редактировать</button>
       </div>
@@ -76,11 +59,8 @@ export default {
         description: '',
         categoryCode: '',
         manufacturerId: '',
-        price: '',
         weight: '',
         volume: '',
-        isPackaged: false,
-        quantityInPackage: 1
       },
     }
   },
@@ -96,11 +76,8 @@ export default {
             this.product.description = data.description
             this.product.categoryCode = data.productCategory.categoryCode
             this.product.manufacturerId = data.manufacturer.id
-            this.product.price = data.price
             this.product.weight = data.weight
             this.product.volume = data.volume
-            this.product.isPackaged = data.isPackaged
-            this.product.quantityInPackage = data.quantityInPackage
           })
           .catch(e => {
             console.log(e);
@@ -112,11 +89,8 @@ export default {
         description: product.description,
         manufacturerId: product.manufacturerId,
         categoryCode: product.categoryCode,
-        price: product.price,
         weight: product.weight,
         volume: product.volume,
-        quantityInPackage: product.quantityInPackage,
-        packaged: product.isPackaged
       }
       ProductDataService
           .edit(requestBody, id)

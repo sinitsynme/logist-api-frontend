@@ -68,8 +68,8 @@ export default {
       OrganizationDataService
           .getPage(0, 15)
           .then(response => {
-            this.organizations = response.data
-            console.log(response.data);
+            this.organizations = response.data.content
+            console.log(response.data.content);
           })
           .catch(e => {
             console.log(e);

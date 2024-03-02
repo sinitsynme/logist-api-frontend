@@ -71,8 +71,8 @@ export default {
       ManufacturerDataService
           .getPage(0, 15)
           .then(response => {
-            this.manufacturers = response.data
-            console.log(response.data);
+            this.manufacturers = response.data.content
+            console.log(response.data.content);
           })
           .catch(e => {
             console.log(e);

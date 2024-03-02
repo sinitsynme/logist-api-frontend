@@ -25,12 +25,6 @@
           <th class="text-left">
             Производитель
           </th>
-          <th class="text-left">
-            Сборный?
-          </th>
-          <th class="text-left">
-            Стоимость, ₽
-          </th>
           <th></th>
         </tr>
         </thead>
@@ -64,17 +58,7 @@
               {{ product.manufacturer.name }}
             </router-link>
           </td>
-          <td>
-            <div v-if="product.packaged">
-              Да
-            </div>
-            <div v-else>
-              Нет
-            </div>
-          </td>
-          <td>
-            {{product.price}}
-          </td>
+
 
           <td>
             <router-link :to="{
@@ -117,7 +101,7 @@ export default {
           .getBySearchQuery(0, 15, query)
           .then(response => {
             this.products = response.data.content
-            console.log(response.data);
+            console.log(response.data.content);
 
             this.products = this.fillProductsWithImages(this.products)
           })

@@ -9,16 +9,20 @@ class StoredProductDataService {
         return logapiAxios.get(`/warehouse/rest/api/v1/warehouse/product?page=${page}&size=${size}&warehouseId=${warehouseId}`);
     }
 
-    addProductToWarehouse(requestBody) {
+    registerProductInWarehouse(requestBody) {
         return logapiAxios.post(`/warehouse/rest/api/v1/warehouse/product`, requestBody);
     }
 
+    addProductToWarehouse(requestBody) {
+        return logapiAxios.patch(`/warehouse/rest/api/v1/warehouse/product/add`, requestBody);
+    }
+
     reserveProduct(requestBody) {
-        return logapiAxios.put(`/warehouse/rest/api/v1/warehouse/product/reserve`, requestBody)
+        return logapiAxios.patch(`/warehouse/rest/api/v1/warehouse/product/reserve`, requestBody)
     }
 
     removeReservedProduct(requestBody) {
-        return logapiAxios.put(`/warehouse/rest/api/v1/warehouse/product/remove`, requestBody)
+        return logapiAxios.patch(`/warehouse/rest/api/v1/warehouse/product/remove`, requestBody)
     }
 
 }
