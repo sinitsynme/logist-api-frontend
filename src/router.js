@@ -97,9 +97,9 @@ const routes =  [
   },
   {
     path: "/product/:id",
-    name: "product",
+    name: "productManagement",
     props: true,
-    component: () => import("./components/admin/product/Product.vue")
+    component: () => import("./components/admin/product/ProductManagementPage.vue")
   },
   {
     path: "/productCreate",
@@ -176,6 +176,13 @@ const routes =  [
     props: true,
     component: () => import("./components/admin/stored_product/AddStoredProduct.vue")
   },
+  {
+    path: "/admin",
+    name: "adminPage",
+    props: true,
+    component: () => import("./components/admin/AdminPage.vue")
+  },
+
 ];
 
 const router = createRouter({

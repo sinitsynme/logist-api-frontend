@@ -1,6 +1,6 @@
 <template>
   <div class="text-center mt-3">
-    <h4>Каталог товаров</h4>
+    <h2>Каталог товаров</h2>
   </div>
   <div class="container-fluid mt-1 d-flex">
     <div class="w-25">
