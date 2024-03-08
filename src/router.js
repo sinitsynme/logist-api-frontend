@@ -26,6 +26,13 @@ const routes =  [
     component: () => import("./components/catalogue/Catalogue.vue")
   },
   {
+    path: "/product/:id",
+    alias: "/product/:id",
+    name: "product",
+    props: true,
+    component: () => import("./components/product/Product.vue")
+  },
+  {
     path: "/personalCabinet",
     alias: "/personalCabinet",
     name: "personalCabinet",
@@ -83,7 +90,7 @@ const routes =  [
     component: () => import("./components/admin/product_category/ProductCategoryEditForm.vue")
   },
   {
-    path: "/product",
+    path: "/productManagementList",
     alias: "/product-list",
     name: "product-list",
     component: () => import("./components/admin/product/ProductList.vue")
@@ -96,8 +103,8 @@ const routes =  [
     component: () => import("./components/catalogue/ProductSearchResult.vue")
   },
   {
-    path: "/product/:id",
-    name: "productManagement",
+    path: "/productManagement/:id",
+    name: "productManagementPage",
     props: true,
     component: () => import("./components/admin/product/ProductManagementPage.vue")
   },
@@ -181,6 +188,13 @@ const routes =  [
     name: "adminPage",
     props: true,
     component: () => import("./components/admin/AdminPage.vue")
+  },
+
+  {
+    path: "/error/:code",
+    name: "error",
+    props: true,
+    component: () => import("./components/common/Error.vue")
   },
 
 ];

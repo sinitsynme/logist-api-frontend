@@ -1,7 +1,7 @@
 import logapiAxios from "../axios/http-common";
 
 class WarehouseDataService {
-    get(id) {
+    async get(id) {
         return logapiAxios.get(`/warehouse/rest/api/v1/warehouse/${id}`);
     }
 

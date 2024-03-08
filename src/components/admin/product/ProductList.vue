@@ -65,7 +65,7 @@
 
           <td>
             <router-link :to="{
-              name: 'product',
+              name: 'productManagementPage',
               params: {
                id: product.id
              }

@@ -39,6 +39,10 @@ class StoredProductDataService {
         return logapiAxios.get(queryUrl)
     }
 
+    async getProductAvailabilityInfo(id) {
+        return logapiAxios.get(`/warehouse/rest/api/v1/warehouse/product/${id}/info`)
+    }
+
 }
 
 export default new StoredProductDataService()
