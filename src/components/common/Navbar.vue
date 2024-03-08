@@ -16,7 +16,7 @@
       </div>
 
       <div class="align-self-center">
-        Мы работаем по всей России! Горячая линия: <a href="tel:88005553535">8 (800) 555-35-35</a>
+        Горячая линия по всей России: <a href="tel:88005553535">8(800)555-35-35</a>
       </div>
     </div>
 
@@ -112,13 +112,13 @@ export default {
     getNavItemLinks() {
       return getAllNavItems(this.authStore.user.userRoles)
     },
-    changeMode() {
+    async changeMode() {
       if (this.isShopMode) {
         this.modeStore.setMode(MODE_MANAGEMENT)
       } else if (this.isManagementMode) {
         this.modeStore.setMode(MODE_SHOP)
       }
-      this.$router.push("/")
+      await this.$router.push("/")
       window.location.reload()
     }
   }
