@@ -9,7 +9,7 @@ class ProductDataService {
         return logapiAxios.get(`/product/rest/api/v1/product/${productId}/image`);
     }
 
-    getPage(page, size) {
+    async getPage(page, size) {
         return logapiAxios.get(`/product/rest/api/v1/product?page=${page}&size=${size}`);
     }
 

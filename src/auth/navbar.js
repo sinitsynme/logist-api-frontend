@@ -8,7 +8,7 @@ const headerMappings = {
     },
     "ROLE_CLIENT": {
         "shop": {
-            "Каталог товаров": "/catalogue",
+            "Каталог": "/catalogue",
             "Категории товаров": "/categories",
             "Производители": "/manufacturers",
             "Мои заказы": "/orders",

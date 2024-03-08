@@ -20,6 +20,12 @@ const routes =  [
     component: () => import("./components/personal/SignupForm.vue")
   },
   {
+    path: "/catalogue",
+    alias: "/catalogue",
+    name: "catalogue",
+    component: () => import("./components/catalogue/Catalogue.vue")
+  },
+  {
     path: "/personalCabinet",
     alias: "/personalCabinet",
     name: "personalCabinet",
@@ -86,16 +92,14 @@ const routes =  [
     path: "/product/search",
     alias: "/product-search",
     name: "product-search",
-    meta: {
-      refresh: true
-    },
-    component: () => import("./components/admin/product/ProductSearchResult.vue")
+    props: true,
+    component: () => import("./components/catalogue/ProductSearchResult.vue")
   },
   {
     path: "/product/:id",
-    name: "product",
+    name: "productManagement",
     props: true,
-    component: () => import("./components/admin/product/Product.vue")
+    component: () => import("./components/admin/product/ProductManagementPage.vue")
   },
   {
     path: "/productCreate",
@@ -172,6 +176,13 @@ const routes =  [
     props: true,
     component: () => import("./components/admin/stored_product/AddStoredProduct.vue")
   },
+  {
+    path: "/admin",
+    name: "adminPage",
+    props: true,
+    component: () => import("./components/admin/AdminPage.vue")
+  },
+
 ];
 
 const router = createRouter({

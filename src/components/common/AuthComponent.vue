@@ -50,3 +50,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+a:hover {
+  cursor:pointer;
+}
+
+</style>

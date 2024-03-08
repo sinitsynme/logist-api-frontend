@@ -100,7 +100,7 @@ export default {
   methods: {
     getProducts() {
       ProductDataService
-          .getPage(0, 15)
+          .getPage(0, 50)
           .then(response => {
             this.products = response.data.content
             console.log(response.data.content);

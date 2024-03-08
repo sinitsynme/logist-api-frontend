@@ -126,7 +126,7 @@
 import ProductDataService from "@/services/ProductDataService";
 
 export default {
-  name: "product",
+  name: "ProductManagementPage",
   props: [
     'id'
   ],
