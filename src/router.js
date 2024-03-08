@@ -20,6 +20,12 @@ const routes =  [
     component: () => import("./components/personal/SignupForm.vue")
   },
   {
+    path: "/catalogue",
+    alias: "/catalogue",
+    name: "catalogue",
+    component: () => import("./components/catalogue/Catalogue.vue")
+  },
+  {
     path: "/personalCabinet",
     alias: "/personalCabinet",
     name: "personalCabinet",

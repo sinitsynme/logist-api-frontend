@@ -21,8 +21,22 @@ class StoredProductDataService {
         return logapiAxios.patch(`/warehouse/rest/api/v1/warehouse/product/reserve`, requestBody)
     }
 
+    cancelReserveOfProduct(requestBody) {
+        return logapiAxios.patch(`/warehouse/rest/api/v1/warehouse/product/reserve/cancel`, requestBody)
+    }
+
     removeReservedProduct(requestBody) {
         return logapiAxios.patch(`/warehouse/rest/api/v1/warehouse/product/remove`, requestBody)
+    }
+
+    async getProductsMinPrices(idArray) {
+        let baseUrl = "/warehouse/rest/api/v1/warehouse/product/minimalPrice?"
+        let i
+        for (i in idArray) {
+            baseUrl += `productIds=${idArray[i]}&`
+        }
+        let queryUrl = baseUrl.substring(0, baseUrl.length - 1)
+        return logapiAxios.get(queryUrl)
     }
 
 }
