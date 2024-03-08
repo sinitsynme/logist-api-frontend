@@ -27,3 +27,14 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Arimo&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Arimo', sans-serif
+}
+</style>
