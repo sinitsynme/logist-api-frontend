@@ -92,10 +92,8 @@ const routes =  [
     path: "/product/search",
     alias: "/product-search",
     name: "product-search",
-    meta: {
-      refresh: true
-    },
-    component: () => import("./components/admin/product/ProductSearchResult.vue")
+    props: true,
+    component: () => import("./components/catalogue/ProductSearchResult.vue")
   },
   {
     path: "/product/:id",

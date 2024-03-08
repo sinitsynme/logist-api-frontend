@@ -1,12 +1,12 @@
 <template>
   <div class="text-center mt-3">
-    <h4>Каталог товаров</h4>
+    <h4>Результаты поиска по запросу "{{ query }}"</h4>
   </div>
   <div class="container-fluid mt-1 d-flex">
     <div class="w-25">
       <b>Фильтрыыыыыыыыыыыыы</b>
     </div>
-    <ProductTable :search-query="''"/>
+    <ProductTable :search-query="query"/>
   </div>
 
 </template>
@@ -16,12 +16,14 @@
 import ProductTable from "@/components/catalogue/ProductTable.vue";
 
 export default {
-  name: "Catalogue",
+  props: ['searchQuery'],
+  name: "ProductSearchResult",
   components: {ProductTable},
-  data() {
-    return {
-      query: ''
+
+  computed: {
+    query() {
+      return this.searchQuery
     }
-  }
+  },
 }
 </script>
