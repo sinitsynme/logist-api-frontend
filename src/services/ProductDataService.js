@@ -1,7 +1,7 @@
 import logapiAxios from "../axios/http-common";
 
 class ProductDataService {
-    get(id) {
+    async get(id) {
         return logapiAxios.get(`/product/rest/api/v1/product/${id}`);
     }
 

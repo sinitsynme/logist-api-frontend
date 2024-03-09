@@ -6,11 +6,16 @@
         <b class="card-title">{{ product.name }}</b>
         <div class="d-flex justify-content-between align-items-center mt-2">
           <b>от {{ product.minimalPrice }} ₽</b>
-          <button class="btn btn-primary">Предложения</button>
+          <router-link :to="{
+            name: 'product',
+            params: {id: product.id}
+          }">
+            <button class="btn btn-primary">Предложения</button>
+          </router-link>
         </div>
       </div>
     </div>
-<!--    refactor not found-->
+    <!--    refactor not found-->
     <div v-if="productsNotFound">
       <b>Товары не найдены, или их нет в наличии</b>
     </div>

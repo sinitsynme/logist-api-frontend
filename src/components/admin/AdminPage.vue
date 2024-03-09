@@ -28,7 +28,7 @@
     </div>
 
     <div>
-      <router-link to="/product">Список товаров
+      <router-link to="/productManagementList">Список товаров
       </router-link>
     </div>
   </div>

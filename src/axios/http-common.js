@@ -2,6 +2,8 @@ import axios from "axios";
 import {useAuthStore} from "@/stores/authStore";
 import router from "@/router";
 
+const ERROR_STATUSES = [403, 404]
+
 function refreshTokenIfNeeded(jwtPair) {
     let authStore = useAuthStore()
     let now = Date.now()
@@ -37,6 +39,14 @@ logapiAxios.interceptors.request.use((request) => {
     }
 
     return request
+})
+
+logapiAxios.interceptors.response.use((response) => {
+    return response
+}, (error) => {
+    if (ERROR_STATUSES.includes(error.response.status)) {
+        router.push(`/error/${error.response.status}`)
+    }
 })
 
 export default logapiAxios;
