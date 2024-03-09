@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-3 ">
     <div class="d-flex justify-content-between">
-      <img :src="product.link" alt="У товара нет изображения" class="big-product-image ml-3">
+      <img :src="product.link" alt="У товара нет изображения" class="big-product-image mr-3 pr-5">
       <div>
         <h3 class="text-center">{{ product.name }}</h3>
         <div v-if="availabilityInfo.available" class="text-center">
