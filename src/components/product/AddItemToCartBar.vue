@@ -42,10 +42,11 @@
       <td>{{ supplyItem.price }}</td>
       <td>{{ supplyItem.quantum }}</td>
       <td>
-        <input type="number" :min="supplyItem.quantum" :value="supplyItem.quantum" :step="supplyItem.quantum" :max="supplyItem.availableForReserveQuantity">
+        <input type="number" :min="supplyItem.quantum" v-model="supplyItem.quantity" :step="supplyItem.quantum"
+               :max="supplyItem.availableForReserveQuantity">
       </td>
       <td>
-        <button class="btn btn-primary">В корзину</button>
+        <button @click="addItemToCart(supplyItem.warehouseId, this.productId, supplyItem.quantity)" class="btn btn-primary">В корзину</button>
       </td>
     </tr>
     </tbody>
@@ -58,11 +59,12 @@
 import WarehouseDataService from "@/services/WarehouseDataService";
 import AddressDataService from "@/services/AddressDataService";
 import StoredProductDataService from "@/services/StoredProductDataService";
+import {useCartStore} from "@/stores/cartStore";
 
 export default {
   name: "AddItemToCartBar",
   props: [
-      'productId'
+    'productId'
   ],
   async mounted() {
     await this.loadSupplyInfo()
@@ -71,6 +73,7 @@ export default {
   },
   data() {
     return {
+      cartStore: useCartStore(),
       supplyList: []
     }
   },
@@ -88,19 +91,23 @@ export default {
         let warehouse = (await WarehouseDataService.get(supplyInfo.warehouseId)).data
 
         supplyInfo.name = warehouse.name
+        supplyInfo.quantity = supplyInfo.quantum
         let warehouseAddress = warehouse.address
 
         let response = await AddressDataService.getAddressData(warehouseAddress.latitude, warehouseAddress.longitude);
         await response.json().then(data => {
-              console.log(data)
+          console.log(data)
 
-              let city = data.address.city
-              let state = data.address.state
-              supplyInfo.address = `${city}, ${state}`
-            })
+          let city = data.address.city
+          let state = data.address.state
+          supplyInfo.address = `${city}, ${state}`
+        })
       }
+    },
+    async addItemToCart(warehouseId, productId, quantity) {
+      this.cartStore.addItemToCart(warehouseId, productId, quantity)
+      alert("Товар добавлен в корзину")
     }
-
   }
 }
 </script>

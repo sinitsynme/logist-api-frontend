@@ -26,6 +26,12 @@ const routes =  [
     component: () => import("./components/catalogue/Catalogue.vue")
   },
   {
+    path: "/cart",
+    alias: "/cart",
+    name: "cart",
+    component: () => import("./components/order/Cart.vue")
+  },
+  {
     path: "/product/:id",
     alias: "/product/:id",
     name: "product",
