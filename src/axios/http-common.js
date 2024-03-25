@@ -48,6 +48,9 @@ logapiAxios.interceptors.response.use((response) => {
     if (ERROR_STATUSES.includes(error.response.status)) {
         router.push(`/error/${error.response.status}`)
     }
+    if (error.response.status === 400) {
+        console.log(error.response.data)
+    }
 })
 
 export default logapiAxios;

@@ -12,6 +12,7 @@ const headerMappings = {
             "Категории товаров": "/categories",
             "Производители": "/manufacturers",
             "Мои заказы": "/orders",
+            "Мои организации": "/client/organizations"
         }
     },
     "ROLE_DRIVER": {

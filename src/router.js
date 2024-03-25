@@ -203,6 +203,43 @@ const routes =  [
     component: () => import("./components/common/Error.vue")
   },
 
+  {
+    path: "/client/organizations",
+    name: "ClientOrganizations",
+    props: true,
+    component: () => import("./components/clientOrganization/ClientOrganizationList.vue")
+  },
+
+  {
+    path: "/client/organizations/create",
+    name: "ClientOrganizationForm",
+    props: true,
+    component: () => import("./components/clientOrganization/ClientOrganizationForm.vue")
+  },
+
+
+  {
+    path: "/client/organizations/:inn",
+    name: "ClientOrganization",
+    props: true,
+    component: () => import("./components/clientOrganization/ClientOrganization.vue")
+  },
+
+  {
+    path: "/client/organizations/:inn/address",
+    name: "ClientOrganizationAddAddress",
+    props: true,
+    component: () => import("./components/clientOrganization/ClientOrganizationAddAddressForm.vue")
+  },
+
+  {
+    path: "/client/organizations/:inn/edit",
+    name: "ClientOrganizationEdit",
+    props: true,
+    component: () => import("./components/clientOrganization/ClientOrganizationEditForm.vue")
+  },
+
+
 ];
 
 const router = createRouter({
