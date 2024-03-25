@@ -1,5 +1,8 @@
 <template>
-  <div class="container mt-3 ">
+  <div class="ml-4 mt-3">
+    <router-link to="/catalogue">Вернуться в каталог</router-link>
+  </div>
+  <div class="container mt-3">
     <div class="d-flex justify-content-between">
       <img :src="product.link" alt="У товара нет изображения" class="big-product-image mr-3 pr-5">
       <div>

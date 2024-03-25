@@ -12,6 +12,7 @@ function refreshTokenIfNeeded(jwtPair) {
         let refreshTokenExpiresAt = Date.parse(jwtPair.refreshTokenExpiresAt)
         if (now > refreshTokenExpiresAt) {
             authStore.logout()
+            router.push("/login")
         }
         authStore.refreshToken(jwtPair).catch(e => {
             console.log(e)
