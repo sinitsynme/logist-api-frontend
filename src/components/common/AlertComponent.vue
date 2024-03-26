@@ -1,6 +1,6 @@
 <template>
-  <div class="text-center mt-4" >
-    <div class="alert alert-danger" role="alert">
+  <div class="text-center mt-4">
+    <div :class="{'alert': true, 'alert-danger': isError, 'alert-info': !isError,}" role="alert">
       {{ message }}
     </div>
   </div>
@@ -12,17 +12,17 @@
 export default {
   name: "AlertComponent",
   props: [
-    'message'
+    'message',
+    'isError',
   ],
   data() {
-    return {
-    }
+    return {}
   },
-  computed: {
-
-  },
-  methods: {
-
-  }
+  computed: {},
+  methods: {}
 };
 </script>
+
+<style scoped>
+
+</style>
