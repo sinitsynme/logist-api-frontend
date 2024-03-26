@@ -31,6 +31,14 @@ const routes =  [
     name: "cart",
     component: () => import("./components/order/Cart.vue")
   },
+
+  {
+    path: "/order/confirmation",
+    alias: "/order/confirmation",
+    name: "OrderConfirmation",
+    component: () => import("./components/order/OrderConfirmation.vue")
+  },
+
   {
     path: "/product/:id",
     alias: "/product/:id",
@@ -238,6 +246,8 @@ const routes =  [
     props: true,
     component: () => import("./components/clientOrganization/ClientOrganizationEditForm.vue")
   },
+
+
 
 
 ];

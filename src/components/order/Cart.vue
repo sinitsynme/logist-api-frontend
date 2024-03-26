@@ -2,16 +2,16 @@
   <div class="ml-4 mt-2">
     <router-link to="/catalogue">Вернуться в каталог</router-link>
   </div>
-  <div class="text-center">
+  <div class="text-center" v-if="!isEmpty">
     <h2>Корзина</h2>
   </div>
   <div class="container mt-1">
 
     <div v-if="isEmpty" class="text-center">
       <h2>В корзине нет товаров</h2>
-      <p>Найдите товары при помощи поиска</p>
+      <p>Найдите товары при помощи поиска или</p>
       <router-link to="/catalogue" class="ml-4 mt-3">
-        <button class="btn btn-outline-primary">Вернуться в каталог</button>
+        <button class="btn btn-outline-primary">Перейти в каталог</button>
       </router-link>
     </div>
     <div v-else>
@@ -19,7 +19,7 @@
         <table class="table">
           <tbody>
           <tr>
-            <td class="align-middle">
+            <td class="align-middle cart-td">
               <h3>Заказ со склада:
                 <router-link :to="{
           name: 'warehouse',
@@ -30,11 +30,11 @@
                 </router-link>
               </h3>
             </td>
-            <td class="align-middle">
+            <td class="align-middle cart-td ">
               Стоимость заказа: <b>{{ toFixed(preparedOrder.sum, 2) }} ₽</b>
             </td>
-            <td class="align-middle">
-              <button class="btn btn-outline-primary">Оформить</button>
+            <td class="align-middle cart-td">
+              <button class="btn btn-outline-primary" @click="goToOrderConfirmation(preparedOrder.warehouseId)">Оформить</button>
             </td>
           </tr>
           </tbody>
@@ -43,7 +43,7 @@
         <table class="table">
           <tbody>
           <tr v-for="product in preparedOrder.products" :key="product.id">
-            <td class="align-middle">
+            <td class="align-middle cart-td">
               <router-link :to="{
             name: 'product',
             params: {id: product.productId}
@@ -51,7 +51,7 @@
                 <img :src="product.imageLink" alt="У товара нет изображения" class="small-product-image">
               </router-link>
             </td>
-            <td class="align-middle">
+            <td class="align-middle cart-td">
               <router-link :to="{
             name: 'product',
             params: {id: product.productId}
@@ -59,7 +59,7 @@
                 {{ product.name }}
               </router-link>
             </td>
-            <td class="align-middle">
+            <td class="align-middle cart-td">
               <input @change="changeProductQuantity(
                          preparedOrder.warehouseId,
                          product.productId,
@@ -68,10 +68,10 @@
                      v-model="product.quantity" type="number" :min="product.quantum" :step="product.quantum"
                      :max="product.availableForReserveQuantity" onkeydown="return false">
             </td>
-            <td class="align-middle">
+            <td class="align-middle cart-td">
               <b>{{ toFixed(product.quantity * product.price, 2) }} ₽</b>
             </td>
-            <td class="align-middle">
+            <td class="align-middle cart-td">
               <img @click="removeProductFromCart(preparedOrder.warehouseId, product.productId)"
                    :src="require('../../assets/icons/rubbish-bin.svg')" alt="СкладЛайн" class="icon">
             </td>
@@ -142,7 +142,6 @@ export default {
           }
         }
       }
-      console.log(this.cart)
     },
 
     async changeProductQuantity(warehouseId, productId, quantity) {
@@ -150,7 +149,6 @@ export default {
       let preparedOrder
 
       for (i in this.cart) {
-        console.log(this.cart[i])
         if (this.cart[i].warehouseId === warehouseId) {
           preparedOrder = this.cart[i]
         }
@@ -176,6 +174,20 @@ export default {
       var power = Math.pow(10, precision || 0);
       return String(Math.round(value * power) / power);
     },
+
+    async goToOrderConfirmation(warehouseId) {
+      let i
+      let preparedOrder
+
+      for (i in this.cart) {
+        if (this.cart[i].warehouseId === warehouseId) {
+          preparedOrder = this.cart[i]
+        }
+      }
+
+      this.cartStore.confirmedOrder = preparedOrder
+      await this.$router.push("/order/confirmation")
+    }
   },
 
 
@@ -201,4 +213,12 @@ table {
 tr {
   border-bottom: 1pt solid black;
 }
+
+td {
+  border-top: none !important;
+}
+.cart-td {
+  text-align: center;
+}
+
 </style>
