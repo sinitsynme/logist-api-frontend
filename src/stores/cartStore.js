@@ -13,7 +13,8 @@ function getCartFromLocalStorage() {
 export const useCartStore = defineStore('cartStore', {
 
     state: () => ({
-        cart: getCartFromLocalStorage()
+        cart: getCartFromLocalStorage(),
+        confirmedOrder: {}
     }),
 
     actions: {
@@ -58,6 +59,11 @@ export const useCartStore = defineStore('cartStore', {
             }
             this.setCart(this.cart)
             this.recalculateOrderPrice()
+        },
+
+        removeWarehouseFromCart(warehouseId) {
+            this.cart = this.cart.filter(it => it.warehouseId !== warehouseId)
+            this.setCart(this.cart)
         },
 
         removeProductFromCart(warehouseId, productId) {

@@ -1,8 +1,8 @@
 <template class="d-inline">
-  <div class="container mt-5 w-50">
+  <div class="container mt-3 w-50">
     <h2 class="text-center">Регистрация в СкладЛайн</h2>
 
-    <div class="mt-5">
+    <div class="mt-3">
 
       <form @submit.prevent="onsubmit">
         <div class="form-group">

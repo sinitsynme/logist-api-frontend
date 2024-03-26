@@ -21,7 +21,7 @@
                   @click="login" :disabled="!isActiveLoginButton">Войти в систему</button>
         </div>
 
-        <AlertComponent :message="alertMessage" v-if="showInvalidCredsAlert"/>
+        <AlertComponent :message="alertMessage" :is-error="true" v-if="showInvalidCredsAlert"/>
 
         <div class="text-center mt-4">
           Или <a class="link-primary" @click="routeToSignup">зарегистрироваться в СкладЛайн</a>
