@@ -128,6 +128,7 @@ import WarehouseDataService from "@/services/WarehouseDataService";
 import ClientOrganizationDataService from "@/services/ClientOrganizationDataService";
 import AddressDataService from "@/services/AddressDataService";
 import OrderDataService from "@/services/OrderDataService";
+import {toFixed} from "../../scripts/common";
 
 export default {
   name: "OrderConfirmation",
@@ -184,7 +185,8 @@ export default {
   },
 
   methods: {
-    // добавить ссылку на организации, если таковых у клиента нет!!! не оформляем заказ без хотя бы 1 организации и адреса
+    toFixed,
+
     async getPreparedOrder() {
       this.order = await useCartStore().confirmedOrder
 
@@ -198,11 +200,6 @@ export default {
     async fetchClientOrganizations() {
       let userId = this.authStore.user.userId;
       this.clientOrganizations = (await ClientOrganizationDataService.getPageByClientId(userId, 0, 30)).data.content
-    },
-
-    toFixed(value, precision) {
-      var power = Math.pow(10, precision || 0);
-      return String(Math.round(value * power) / power);
     },
 
     async fetchAllAddressData() {
@@ -249,7 +246,7 @@ export default {
       if (response.id) {
         await this.cartStore.removeWarehouseFromCart(this.order.warehouseId)
         alert("Заказ успешно оформлен")
-        await this.$router.push("/")
+        await this.$router.push(`/orders/${response.id}`)
       }
     },
 
