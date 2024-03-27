@@ -65,7 +65,7 @@
 <script>
 
 import AlertComponent from "@/components/common/AlertComponent.vue";
-import AuthDataService from "@/auth/AuthDataService";
+import AuthDataService from "@/scripts/auth/AuthDataService";
 
 export default {
   name: "SignupForm",

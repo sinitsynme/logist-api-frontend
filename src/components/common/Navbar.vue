@@ -60,7 +60,7 @@
 <script>
 
 import {useAuthStore} from "@/stores/authStore";
-import {getAllNavItems} from "@/auth/navbar"
+import {getAllNavItems} from "@/scripts/auth/navbar"
 import {MODE_MANAGEMENT, MODE_SHOP, useModeStore} from "@/stores/modeStore";
 import SearchBar from "@/components/common/SearchBar.vue";
 import AuthComponent from "@/components/common/AuthComponent.vue";
