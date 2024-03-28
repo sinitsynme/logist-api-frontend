@@ -1,9 +1,5 @@
 <template>
-  <div class="ml-4 mt-2">
-    <router-link to="/cart">Вернуться в корзину</router-link>
-  </div>
-
-  <div class="text-center">
+  <div class="text-center mt-2">
     <h2>Заказ от {{ new Date(order.createdAt).toLocaleDateString('ru-RU', dateOptions) }} со склада
       <router-link :to="{
             name: 'warehouse',
@@ -32,6 +28,7 @@
         </td>
         <td class="align-middle">
           <b>{{ order.finalSum }} ₽</b>
+          <span  v-if="paymentStatus" :class="['badge', paymentStatus.style, 'ml-3']">{{ paymentStatus.screenName }}</span>
         </td>
       </tr>
       <tr>
@@ -61,14 +58,6 @@
         </td>
         <td class="align-middle" v-if="orderStatus">
           <span :class="['badge', orderStatus.style]">{{ orderStatus.screenName }}</span>
-        </td>
-      </tr>
-      <tr>
-        <td class="align-middle">
-          <b>Статус оплаты</b>
-        </td>
-        <td class="align-middle" v-if="paymentStatus">
-          <span :class="['badge', paymentStatus.style]">{{ paymentStatus.screenName }}</span>
         </td>
       </tr>
       <tr>
