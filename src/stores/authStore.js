@@ -1,5 +1,5 @@
 import {defineStore} from "pinia"
-import AuthDataService from "@/auth/AuthDataService";
+import AuthDataService from "@/scripts/auth/AuthDataService";
 import {jwtDecode} from "jwt-decode";
 
 function parseJwt(token) {

@@ -67,10 +67,11 @@
           <b>Организация</b>
         </td>
         <td class="align-middle">
-          <router-link to="/client/organizations" v-if="noOrganization">
+          <div v-if="!isLoaded" class="skeleton">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+          <router-link to="/client/organizations" v-if="noOrganization && isLoaded">
             Зарегистрируйте первую организацию
           </router-link>
-          <select @change="clearAddressId" class="form-select p-2" v-model="chosenOrganizationInn" v-else>
+          <select @change="clearAddressId" class="form-select p-2" v-model="chosenOrganizationInn" v-else-if="isLoaded">
             <option v-for="org in clientOrganizations" v-bind:value="org.inn" :key="org.inn">
               {{ org.name }}
             </option>
@@ -82,11 +83,12 @@
           <b>Адрес организации для доставки</b>
         </td>
         <td class="align-middle">
-          <div v-if="chosenOrganizationInn === ''">
+          <div v-if="!isLoaded" class="skeleton">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+          <div v-if="chosenOrganizationInn === '' && isLoaded">
             <b>Выберите организацию</b>
           </div>
           <div v-else>
-            <div v-if="noOrganizationAddress">
+            <div v-if="noOrganizationAddress && isLoaded">
               <router-link :to="{
             name: 'ClientOrganization',
             params: {inn: chosenOrganizationInn}
@@ -94,7 +96,7 @@
                 Добавьте первый адрес для этой организации
               </router-link>
             </div>
-            <select v-else class="form-select p-2" v-model="chosenAddressId">
+            <select v-else-if="isLoaded" class="form-select p-2" v-model="chosenAddressId">
               <option v-for="address in chosenOrganizationAddresses" v-bind:value="address.id" :key="address.id">
                 {{ getStringifiedAddress(address).stringified }}
               </option>
@@ -128,6 +130,7 @@ import WarehouseDataService from "@/services/WarehouseDataService";
 import ClientOrganizationDataService from "@/services/ClientOrganizationDataService";
 import AddressDataService from "@/services/AddressDataService";
 import OrderDataService from "@/services/OrderDataService";
+import {toFixed} from "../../scripts/common";
 
 export default {
   name: "OrderConfirmation",
@@ -137,9 +140,11 @@ export default {
     if (!this.authStore.user.isAuthenticated) {
       await this.$router.push("/login")
     }
-    await this.getPreparedOrder()
-    await this.fetchClientOrganizations()
-    await this.fetchAllAddressData()
+    else {
+      await this.getPreparedOrder()
+      await this.fetchClientOrganizations()
+      await this.fetchAllAddressData()
+    }
   },
   computed: {
     isAlertShown() {
@@ -179,12 +184,14 @@ export default {
       clientOrganizations: [],
       chosenOrganizationInn: '',
       stringifiedOrganizationAddresses: [],
-      chosenAddressId: ''
+      chosenAddressId: '',
+      isLoaded: false
     }
   },
 
   methods: {
-    // добавить ссылку на организации, если таковых у клиента нет!!! не оформляем заказ без хотя бы 1 организации и адреса
+    toFixed,
+
     async getPreparedOrder() {
       this.order = await useCartStore().confirmedOrder
 
@@ -196,13 +203,12 @@ export default {
     },
 
     async fetchClientOrganizations() {
+      this.isLoaded = false
       let userId = this.authStore.user.userId;
       this.clientOrganizations = (await ClientOrganizationDataService.getPageByClientId(userId, 0, 30)).data.content
-    },
-
-    toFixed(value, precision) {
-      var power = Math.pow(10, precision || 0);
-      return String(Math.round(value * power) / power);
+      this.chosenOrganizationInn = this.clientOrganizations[0].inn
+      this.chosenAddressId = this.clientOrganizations[0].addressResponseDto[0].id
+      this.isLoaded = true
     },
 
     async fetchAllAddressData() {
@@ -249,7 +255,7 @@ export default {
       if (response.id) {
         await this.cartStore.removeWarehouseFromCart(this.order.warehouseId)
         alert("Заказ успешно оформлен")
-        await this.$router.push("/")
+        await this.$router.push(`/orders/${response.id}`)
       }
     },
 
@@ -259,6 +265,7 @@ export default {
 
     clearAddressId() {
       this.chosenAddressId = '';
+      this.chosenAddressId = this.clientOrganizations.find(it => it.inn === this.chosenOrganizationInn).addressResponseDto[0].id
     }
 
   }
@@ -274,6 +281,14 @@ td {
 
 .cart-td {
   text-align: center;
+}
+
+.skeleton {
+  background: #3a3a3a;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  border-radius: 5px;
+  background-size: 200% 100%;
+  animation: 0.5s shine linear infinite running;
 }
 
 </style>

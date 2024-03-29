@@ -40,6 +40,22 @@ const routes =  [
   },
 
   {
+    path: "/orders/:id",
+    alias: "/orders/:id",
+    name: "ClientOrder",
+    props: true,
+    component: () => import("./components/order/ClientOrder.vue")
+  },
+
+  {
+    path: "/orders",
+    alias: "/orders",
+    name: "ClientOrderList",
+    props: true,
+    component: () => import("./components/order/ClientOrderList.vue")
+  },
+
+  {
     path: "/product/:id",
     alias: "/product/:id",
     name: "product",

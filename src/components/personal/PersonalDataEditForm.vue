@@ -41,7 +41,7 @@
 
 <script>
 import {useAuthStore} from "@/stores/authStore";
-import AuthDataService from "@/auth/AuthDataService";
+import AuthDataService from "@/scripts/auth/AuthDataService";
 import AlertComponent from "@/components/common/AlertComponent.vue";
 
 export default {

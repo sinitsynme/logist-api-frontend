@@ -1,4 +1,4 @@
-import logapiAxios from "../axios/http-common";
+import logapiAxios from "../../axios/http-common";
 import axiosWithoutInterceptor from "@/axios/axiosWithoutInterceptor";
 
 class AuthDataService {

@@ -39,7 +39,7 @@
         </router-link>
       </td>
       <td>{{ supplyItem.address }}</td>
-      <td>{{ supplyItem.price }}</td>
+      <td><b>{{ supplyItem.price }} ₽</b></td>
       <td>{{ supplyItem.quantum }}</td>
       <td>
         <input type="number" :min="supplyItem.quantum" v-model="supplyItem.quantity" :step="supplyItem.quantum"
