@@ -170,6 +170,7 @@ import {mapOrderStatus, mapPaymentStatus} from "@/scripts/order/statuses";
 import {useAuthStore} from "@/stores/authStore";
 import ProductDataService from "@/services/ProductDataService";
 import WarehouseDataService from "@/services/WarehouseDataService";
+import {onMounted} from "vue";
 
 export default {
   name: "ClientOrderList",
@@ -181,9 +182,13 @@ export default {
     } else {
       await this.fetchClientOrganizations()
       await this.fetchAllAddressData()
-      this.isLoaded = true
+      onMounted(() => {
+        this.isLoaded = true
+      })
     }
   },
+
+
   computed: {
     chosenOrganizationAddresses() {
       let chosenInn = this.chosenOrganizationInn
