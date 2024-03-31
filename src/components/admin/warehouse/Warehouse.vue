@@ -3,6 +3,16 @@
     <div class="d-flex justify-content-between">
     <h2 class="text-center">Просмотр информации о складе</h2>
       <router-link :to="{
+        name: 'WarehouseOrderList',
+        params: {
+          warehouseId: id
+        }}"
+      >
+        <button class="btn btn-outline-secondary">
+          Просмотр заказов склада
+        </button>
+      </router-link>
+      <router-link :to="{
         name: 'storedProductList',
         params: {
           warehouseId: id

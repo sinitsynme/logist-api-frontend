@@ -31,6 +31,32 @@ class OrderDataService {
 
         return logapiAxios.get(url)
     }
+
+    getByWarehouseId(warehouseId, pageRequest) {
+        return this.getByWarehouseIdWithStatuses(warehouseId, [
+                'NEW',
+                'IN_PROGRESS',
+                'READY_TO_DELIVER',
+                'DELIVERY',
+                'DONE',
+                'REJECTED',
+                'RETURNED',
+                'PARTIALLY_RETURNED',
+                'ABORTED']
+            , pageRequest)
+    }
+    getByWarehouseIdWithStatuses(warehouseId, statuses, pageRequest) {
+        let url = `/order/rest/api/v1/order/warehouseId/${warehouseId}?page=${pageRequest.page}&size=${pageRequest.size}&sortFromMaxToMin=${true}`
+        let i,j
+        for(i in statuses) {
+            url += `&statuses=${statuses[i]}`
+        }
+        for (j in pageRequest.sortByFields) {
+            url += `&sortByFields=${pageRequest.sortByFields[j]}`
+        }
+
+        return logapiAxios.get(url)
+    }
     create(order) {
         return logapiAxios.post(`/order/rest/api/v1/order`, order)
     }
@@ -44,7 +70,11 @@ class OrderDataService {
     }
 
     changeOrderStatus(id, status) {
-        return logapiAxios.patch(`/order/rest/api/v1/order/${id}`, status)
+        return logapiAxios.patch(`/order/rest/api/v1/order/${id}/status`, status)
+    }
+
+    getEventsByOrderId(id) {
+        return logapiAxios.get(`/order/rest/api/v1/order/event/${id}`)
     }
 
 }
