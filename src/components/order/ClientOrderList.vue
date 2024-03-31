@@ -38,8 +38,8 @@
         </td>
 
         <td class="align-middle text-center">
-          <div v-if="!isLoaded" class="skeleton">&nbsp;&nbsp;&nbsp;</div>
-          <div v-if="!isLoaded" class="skeleton">&nbsp;&nbsp;&nbsp;</div>
+          <div v-if="!isLoaded" class="skeleton">&nbsp;</div>
+          <div v-if="!isLoaded" class="skeleton mt-3">&nbsp;&nbsp;</div>
         </td>
 
       </tr>
@@ -245,8 +245,12 @@ export default {
     async fetchClientOrganizations() {
       let userId = this.authStore.user.userId;
       this.clientOrganizations = (await ClientOrganizationDataService.getPageByClientId(userId, 0, 30)).data.content
-      this.chosenOrganizationInn = this.clientOrganizations[0].inn
-      this.chosenAddressId = this.clientOrganizations[0].addressResponseDto[0].id
+      if (this.clientOrganizations.length > 0) {
+        this.chosenOrganizationInn = this.clientOrganizations[0].inn
+        this.chosenAddressId = this.clientOrganizations[0].addressResponseDto[0].id
+      } else {
+        this.isLoaded = true
+      }
     },
 
     async fetchAllAddressData() {
@@ -307,7 +311,9 @@ export default {
 
     changeOrganization() {
       this.chosenAddressId = ''
-      this.chosenAddressId = this.clientOrganizations.find(it => it.inn === this.chosenOrganizationInn).addressResponseDto[0].id
+      if (this.clientOrganizations.length > 0) {
+        this.chosenAddressId = this.clientOrganizations.find(it => it.inn === this.chosenOrganizationInn).addressResponseDto[0].id
+      }
     }
   }
 }

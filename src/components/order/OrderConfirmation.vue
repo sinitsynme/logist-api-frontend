@@ -206,8 +206,10 @@ export default {
       this.isLoaded = false
       let userId = this.authStore.user.userId;
       this.clientOrganizations = (await ClientOrganizationDataService.getPageByClientId(userId, 0, 30)).data.content
-      this.chosenOrganizationInn = this.clientOrganizations[0].inn
-      this.chosenAddressId = this.clientOrganizations[0].addressResponseDto[0].id
+      if (this.clientOrganizations.length > 0) {
+        this.chosenOrganizationInn = this.clientOrganizations[0].inn
+        this.chosenAddressId = this.clientOrganizations[0].addressResponseDto[0].id
+      }
       this.isLoaded = true
     },
 
