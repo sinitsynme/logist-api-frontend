@@ -186,6 +186,7 @@ export default {
         this.isLoaded = true
       })
     }
+    this.getNextOrders()
   },
 
 
@@ -224,12 +225,16 @@ export default {
         day: 'numeric'
       },
       organizationAddressOrders: [],
+      currentPage: 0,
+      isLastPage: false,
     }
   },
 
   watch: {
     chosenAddressId: async function (addressId) {
       if (!addressId) return
+      this.currentPage = 0
+      this.isLastPage = false
       this.isLoaded = false
       this.organizationAddressOrders = []
       await this.fetchOrderData(addressId)
@@ -241,6 +246,15 @@ export default {
     mapOrderStatus,
     mapPaymentStatus,
     toFixed,
+
+    getNextOrders() {
+      window.onscroll = async () => {
+        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight > document.documentElement.offsetHeight - 1;
+        if (bottomOfWindow && !this.isLastPage) {
+          await this.fetchOrderData(this.chosenAddressId)
+        }
+      }
+    },
 
     async fetchClientOrganizations() {
       let userId = this.authStore.user.userId;
@@ -277,17 +291,23 @@ export default {
     },
 
     async fetchOrderData(addressId) {
-      this.organizationAddressOrders = (await OrderDataService.getByAddressId(addressId, {
-        page: 0,
-        size: 100,
+      let ordersResponse = (await OrderDataService.getByAddressId(addressId, {
+        page: this.currentPage,
+        size: 6,
         sortByFields: ['createdAt'],
         sortFromMaxToMin: true
-      })).data.content
+      })).data
+
+      this.currentPage++
+
+      let organizationAddressOrders = ordersResponse.content
+
+      this.isLastPage = ordersResponse.last
 
       let j
-      for (j in this.organizationAddressOrders) {
+      for (j in organizationAddressOrders) {
         let i = 0
-        let order = this.organizationAddressOrders[j]
+        let order = organizationAddressOrders[j]
         order.productImageLinks = []
         order.warehouse = (await WarehouseDataService.get(order.warehouseId)).data
         order.status = mapOrderStatus(order.status)
@@ -300,6 +320,10 @@ export default {
             i++
           }
         }
+      }
+
+      for (let order of organizationAddressOrders) {
+        this.organizationAddressOrders.push(order)
       }
 
       console.log(this.organizationAddressOrders)

@@ -69,10 +69,19 @@ const orderPaymentStatusMappings = {
     },
 }
 
+const orderPaymentTypeMappings = {
+    "CASH": "Наличные",
+    "NON_CASH": "Безналичные"
+}
+
 export function mapOrderStatus(status) {
     return orderStatusMappings[status]
 }
 
 export function mapPaymentStatus(status) {
     return orderPaymentStatusMappings[status]
+}
+
+export function mapPaymentType(type) {
+    return orderPaymentTypeMappings[type]
 }

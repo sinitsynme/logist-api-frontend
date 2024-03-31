@@ -28,7 +28,13 @@
         </td>
         <td class="align-middle">
           <b>{{ order.finalSum }} ₽</b>
-          <span  v-if="paymentStatus" :class="['badge', paymentStatus.style, 'ml-3']">{{ paymentStatus.screenName }}</span>
+          <span v-if="paymentStatus" :class="['badge', paymentStatus.style, 'ml-3']">{{
+              paymentStatus.screenName
+            }}</span>
+          <span v-if="order.paymentStatus !== 'PENDING_PAYMENT'" class="badge badge-secondary ml-2">{{ paymentType }}</span>
+        </td>
+        <td v-if="order.paymentStatus === 'PENDING_PAYMENT'">
+          <button @click="payForOrderNonCash" class="btn btn-outline-primary">Оплатить заказ безналичными</button>
         </td>
       </tr>
       <tr>
@@ -60,13 +66,13 @@
           <span :class="['badge', orderStatus.style]">{{ orderStatus.screenName }}</span>
         </td>
       </tr>
-      <tr>
+      <tr v-if="documentsAvailable">
         <td class="align-middle">
           <b>Документы по заказу</b>
         </td>
         <td class="align-middle">
           <div v-for="document in documents" :key="document.name">
-            <a :href="document.path">{{document.name}}</a>
+            <a :href="document.path">{{ document.name }}</a>
           </div>
         </td>
       </tr>
@@ -111,7 +117,6 @@
     </table>
 
 
-
   </div>
 
 </template>
@@ -124,7 +129,7 @@ import ClientOrganizationDataService from "@/services/ClientOrganizationDataServ
 import AddressDataService from "@/services/AddressDataService";
 import ProductDataService from "@/services/ProductDataService";
 import {toFixed} from "@/scripts/common";
-import {mapOrderStatus, mapPaymentStatus} from "@/scripts/order/statuses";
+import {mapOrderStatus, mapPaymentStatus, mapPaymentType} from "@/scripts/order/statuses";
 
 export default {
   name: "ClientOrder",
@@ -140,6 +145,12 @@ export default {
     },
     paymentStatus() {
       return this.mapPaymentStatus(this.order.paymentStatus)
+    },
+    paymentType() {
+      return this.mapPaymentType(this.order.paymentType)
+    },
+    documentsAvailable() {
+      return this.documents.length > 0
     }
   },
 
@@ -162,12 +173,14 @@ export default {
     mapOrderStatus,
     mapPaymentStatus,
     toFixed,
+    mapPaymentType,
     async fetchOrderData() {
       this.order = (await OrderDataService.get(this.id)).data
       console.log(this.order.status)
+      console.log(this.order.paymentType)
 
       let i
-      for(i in this.order.orderItemList) {
+      for (i in this.order.orderItemList) {
         let product = this.order.orderItemList[i]
         ProductDataService.get(product.productId).then(
             response => {
@@ -199,19 +212,28 @@ export default {
           }
       )
       // this.documentLinks = this.order.documentResponseDtos
-      this.documents = [
-        {
-          type: "RECEIPT", //REFUND_RECEIPT, INVOICE,
-          path: "http://localhost:8081",
-          name: "Кассовый чек от 2024-03-28"
-        },
-        {
-          type: "INVOICE", //REFUND_RECEIPT, INVOICE,
-          path: "http://localhost:8081",
-          name: "Счёт-фактура от 2024-03-28"
-        }
-      ]
+      // this.documents = [
+      //   {
+      //     type: "RECEIPT", //REFUND_RECEIPT, INVOICE,
+      //     path: "http://localhost:8081",
+      //     name: "Кассовый чек от 2024-03-28"
+      //   },
+      //   {
+      //     type: "INVOICE", //REFUND_RECEIPT, INVOICE,
+      //     path: "http://localhost:8081",
+      //     name: "Счёт-фактура от 2024-03-28"
+      //   }
+      // ]
 
+    },
+
+    async payForOrderNonCash() {
+      if (confirm(`Подтвердить оплату заказа стоимостью в ${this.order.finalSum} ₽`)) {
+        await OrderDataService.changeOrderPaymentType(this.order.id, {paymentType: 'NON_CASH'})
+        await OrderDataService.changeOrderPaymentStatus(this.order.id, {status: 'PAID'})
+
+        await window.location.reload()
+      }
     }
   }
 }

@@ -35,6 +35,18 @@ class OrderDataService {
         return logapiAxios.post(`/order/rest/api/v1/order`, order)
     }
 
+    changeOrderPaymentType(id, paymentType) {
+        return logapiAxios.patch(`/order/rest/api/v1/order/${id}/payment/type`, paymentType)
+    }
+
+    changeOrderPaymentStatus(id, status) {
+        return logapiAxios.patch(`/order/rest/api/v1/order/${id}/payment/status`, status)
+    }
+
+    changeOrderStatus(id, status) {
+        return logapiAxios.patch(`/order/rest/api/v1/order/${id}`, status)
+    }
+
 }
 
 export default new OrderDataService()
