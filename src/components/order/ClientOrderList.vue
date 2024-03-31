@@ -153,6 +153,9 @@
       </tbody>
     </table>
 
+    <div v-if="moreOrdersAreLoading" class="skeleton">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+
     <div v-if="noAddressChosen" class="text-center mt-5">
       <h5>Выберите организацию и её адрес для просмотра заказов</h5>
     </div>
@@ -219,6 +222,7 @@ export default {
       stringifiedOrganizationAddresses: [],
       chosenAddressId: '',
       isLoaded: false,
+      moreOrdersAreLoading: false,
       dateOptions: {
         year: 'numeric',
         month: 'long',
@@ -251,7 +255,9 @@ export default {
       window.onscroll = async () => {
         let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight > document.documentElement.offsetHeight - 1;
         if (bottomOfWindow && !this.isLastPage) {
+          this.moreOrdersAreLoading = true
           await this.fetchOrderData(this.chosenAddressId)
+          this.moreOrdersAreLoading = false
         }
       }
     },
@@ -291,14 +297,16 @@ export default {
     },
 
     async fetchOrderData(addressId) {
+
       let ordersResponse = (await OrderDataService.getByAddressId(addressId, {
         page: this.currentPage,
-        size: 6,
+        size: 30,
         sortByFields: ['createdAt'],
         sortFromMaxToMin: true
       })).data
 
       this.currentPage++
+
 
       let organizationAddressOrders = ordersResponse.content
 
