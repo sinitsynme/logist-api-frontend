@@ -14,6 +14,15 @@
 
     <table class="table mt-1">
       <tbody>
+      <tr v-if="isLoaded && ['NEW', 'IN_PROGRESS', 'READY_TO_DELIVER'].includes(orderStatus.name)">
+        <td>
+          <div>Заказ ещё можно отменить, </div>
+          <div>если передумали 🚫</div>
+        </td>
+        <td>
+          <button class="btn btn-outline-danger" @click="cancelOrder">Отменить заказ</button>
+        </td>
+      </tr>
       <tr>
         <td class="align-middle">
           <b>ID заказа</b>
@@ -162,6 +171,7 @@ export default {
   async mounted() {
     await this.fetchOrderData()
     this.isLoaded = true
+    console.log(this.orderStatus.name)
   },
   computed: {
     orderStatus() {
@@ -175,7 +185,7 @@ export default {
     },
     documentsAvailable() {
       return this.documents.length > 0
-    }
+    },
   },
 
   data() {
@@ -276,6 +286,13 @@ export default {
         await OrderDataService.changeOrderPaymentType(this.order.id, {paymentType: 'NON_CASH'})
         await OrderDataService.changeOrderPaymentStatus(this.order.id, {status: 'PAID'})
 
+        await window.location.reload()
+      }
+    },
+
+    async cancelOrder() {
+      if (confirm(`Отменить этот заказ?`)) {
+        await OrderDataService.changeOrderStatus(this.order.id, {status: 'RETURNED'})
         await window.location.reload()
       }
     }
