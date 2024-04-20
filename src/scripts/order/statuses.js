@@ -46,6 +46,13 @@ const orderStatusMappings = {
     }
 }
 
+const orderStatusTransitions = {
+    "NEW": ["IN_PROGRESS", "RETURNED"],
+    "IN_PROGRESS": ["REJECTED", "RETURNED", "READY_TO_DELIVER"],
+    "READY_TO_DELIVER": ["DELIVERY"],
+    "DELIVERY": ["DONE", "ABORTED", "RETURNED", "PARTIALLY_RETURNED"]
+}
+
 const orderPaymentStatusMappings = {
     "PENDING_PAYMENT": {
         name: "PENDING_PAYMENT",
@@ -69,10 +76,23 @@ const orderPaymentStatusMappings = {
     },
 }
 
+const orderPaymentTypeMappings = {
+    "CASH": "Наличные",
+    "NON_CASH": "Безналичные"
+}
+
 export function mapOrderStatus(status) {
     return orderStatusMappings[status]
 }
 
 export function mapPaymentStatus(status) {
     return orderPaymentStatusMappings[status]
+}
+
+export function mapPaymentType(type) {
+    return orderPaymentTypeMappings[type]
+}
+
+export function getTransitions(status) {
+    return orderStatusTransitions[status]
 }

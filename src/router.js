@@ -185,6 +185,18 @@ const routes =  [
     component: () => import("./components/admin/warehouse/Warehouse.vue")
   },
   {
+    path: "/warehouse/:warehouseId/orders",
+    name: "WarehouseOrderList",
+    props: true,
+    component: () => import("./components/admin/warehouse/WarehouseOrderList.vue")
+  },
+  {
+    path: "/order/:orderId/management",
+    name: "OrderManagement",
+    props: true,
+    component: () => import("./components/admin/warehouse/WarehouseOrder.vue")
+  },
+  {
     path: "/warehouseCreate",
     name: "warehouseForm",
     component: () => import("./components/admin/warehouse/WarehouseForm.vue")

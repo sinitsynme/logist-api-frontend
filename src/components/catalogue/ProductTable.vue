@@ -24,7 +24,7 @@
 
 <script>
 
-const PAGEABLE_PAGE_SIZE = 12
+const PAGEABLE_PAGE_SIZE = 10
 
 import ProductDataService from "@/services/ProductDataService";
 import StoredProductDataService from "@/services/StoredProductDataService";

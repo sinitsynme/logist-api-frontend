@@ -2,7 +2,17 @@
   <div class="container mt-3">
     <div class="d-flex justify-content-between">
     <h2 class="text-center">Просмотр информации о складе</h2>
-      <router-link :to="{
+      <router-link v-if="isManagementMode" :to="{
+        name: 'WarehouseOrderList',
+        params: {
+          warehouseId: id
+        }}"
+      >
+        <button class="btn btn-outline-secondary">
+          Просмотр заказов склада
+        </button>
+      </router-link>
+      <router-link v-if="isManagementMode" :to="{
         name: 'storedProductList',
         params: {
           warehouseId: id
@@ -77,14 +87,16 @@
               }">
               {{ warehouse.organization.name }}
             </router-link>
+            <button class="btn btn-outline-info ml-3">Скачать прайс-лист</button>
           </td>
+
         </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="d-flex justify-content-between p-5">
-      <router-link :to="{
+    <div v-if="isManagementMode"  class="d-flex justify-content-between p-5">
+      <router-link  :to="{
         name: 'warehouseFormEdit',
         params: {
           id: id
@@ -106,6 +118,7 @@
 
 import MapComponent from "@/components/admin/warehouse/map/MapComponent.vue";
 import WarehouseDataService from "@/services/WarehouseDataService";
+import {useModeStore} from "@/stores/modeStore";
 
 export default {
   name: "warehouse",
@@ -113,6 +126,17 @@ export default {
   props: [
     'id'
   ],
+  computed: {
+    mode() {
+      return this.modeStore.mode
+    },
+    isShopMode() {
+      return this.modeStore.isShopMode()
+    },
+    isManagementMode() {
+      return this.modeStore.isManagementMode()
+    }
+  },
   created() {
     this.getWarehouse()
   },
@@ -129,6 +153,7 @@ export default {
         address: {},
         organization: {}
       },
+      modeStore: useModeStore()
     }
   },
 

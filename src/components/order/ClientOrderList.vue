@@ -38,8 +38,8 @@
         </td>
 
         <td class="align-middle text-center">
-          <div v-if="!isLoaded" class="skeleton">&nbsp;&nbsp;&nbsp;</div>
-          <div v-if="!isLoaded" class="skeleton">&nbsp;&nbsp;&nbsp;</div>
+          <div v-if="!isLoaded" class="skeleton">&nbsp;</div>
+          <div v-if="!isLoaded" class="skeleton mt-3">&nbsp;&nbsp;</div>
         </td>
 
       </tr>
@@ -153,6 +153,9 @@
       </tbody>
     </table>
 
+    <div v-if="moreOrdersAreLoading" class="skeleton">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+
     <div v-if="noAddressChosen" class="text-center mt-5">
       <h5>Выберите организацию и её адрес для просмотра заказов</h5>
     </div>
@@ -186,6 +189,7 @@ export default {
         this.isLoaded = true
       })
     }
+    this.getNextOrders()
   },
 
 
@@ -218,18 +222,23 @@ export default {
       stringifiedOrganizationAddresses: [],
       chosenAddressId: '',
       isLoaded: false,
+      moreOrdersAreLoading: false,
       dateOptions: {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
       },
       organizationAddressOrders: [],
+      currentPage: 0,
+      isLastPage: false,
     }
   },
 
   watch: {
     chosenAddressId: async function (addressId) {
       if (!addressId) return
+      this.currentPage = 0
+      this.isLastPage = false
       this.isLoaded = false
       this.organizationAddressOrders = []
       await this.fetchOrderData(addressId)
@@ -242,11 +251,26 @@ export default {
     mapPaymentStatus,
     toFixed,
 
+    getNextOrders() {
+      window.onscroll = async () => {
+        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight > document.documentElement.offsetHeight - 1;
+        if (bottomOfWindow && !this.isLastPage) {
+          this.moreOrdersAreLoading = true
+          await this.fetchOrderData(this.chosenAddressId)
+          this.moreOrdersAreLoading = false
+        }
+      }
+    },
+
     async fetchClientOrganizations() {
       let userId = this.authStore.user.userId;
       this.clientOrganizations = (await ClientOrganizationDataService.getPageByClientId(userId, 0, 30)).data.content
-      this.chosenOrganizationInn = this.clientOrganizations[0].inn
-      this.chosenAddressId = this.clientOrganizations[0].addressResponseDto[0].id
+      if (this.clientOrganizations.length > 0) {
+        this.chosenOrganizationInn = this.clientOrganizations[0].inn
+        this.chosenAddressId = this.clientOrganizations[0].addressResponseDto[0].id
+      } else {
+        this.isLoaded = true
+      }
     },
 
     async fetchAllAddressData() {
@@ -273,17 +297,25 @@ export default {
     },
 
     async fetchOrderData(addressId) {
-      this.organizationAddressOrders = (await OrderDataService.getByAddressId(addressId, {
-        page: 0,
-        size: 100,
+
+      let ordersResponse = (await OrderDataService.getByAddressId(addressId, {
+        page: this.currentPage,
+        size: 30,
         sortByFields: ['createdAt'],
         sortFromMaxToMin: true
-      })).data.content
+      })).data
+
+      this.currentPage++
+
+
+      let organizationAddressOrders = ordersResponse.content
+
+      this.isLastPage = ordersResponse.last
 
       let j
-      for (j in this.organizationAddressOrders) {
+      for (j in organizationAddressOrders) {
         let i = 0
-        let order = this.organizationAddressOrders[j]
+        let order = organizationAddressOrders[j]
         order.productImageLinks = []
         order.warehouse = (await WarehouseDataService.get(order.warehouseId)).data
         order.status = mapOrderStatus(order.status)
@@ -298,6 +330,10 @@ export default {
         }
       }
 
+      for (let order of organizationAddressOrders) {
+        this.organizationAddressOrders.push(order)
+      }
+
       console.log(this.organizationAddressOrders)
     },
 
@@ -307,7 +343,9 @@ export default {
 
     changeOrganization() {
       this.chosenAddressId = ''
-      this.chosenAddressId = this.clientOrganizations.find(it => it.inn === this.chosenOrganizationInn).addressResponseDto[0].id
+      if (this.clientOrganizations.length > 0) {
+        this.chosenAddressId = this.clientOrganizations.find(it => it.inn === this.chosenOrganizationInn).addressResponseDto[0].id
+      }
     }
   }
 }

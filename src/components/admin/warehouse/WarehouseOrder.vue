@@ -14,15 +14,6 @@
 
     <table class="table mt-1">
       <tbody>
-      <tr v-if="isLoaded && ['NEW', 'IN_PROGRESS', 'READY_TO_DELIVER'].includes(orderStatus.name)">
-        <td>
-          <div>Заказ ещё можно отменить, </div>
-          <div>если передумали 🚫</div>
-        </td>
-        <td>
-          <button class="btn btn-outline-danger" @click="cancelOrder">Отменить заказ</button>
-        </td>
-      </tr>
       <tr>
         <td class="align-middle">
           <b>ID заказа</b>
@@ -40,12 +31,7 @@
           <span v-if="paymentStatus" :class="['badge', paymentStatus.style, 'ml-3']">{{
               paymentStatus.screenName
             }}</span>
-          <span v-if="order.paymentStatus !== 'PENDING_PAYMENT'" class="badge badge-secondary ml-2">{{
-              paymentType
-            }}</span>
-        </td>
-        <td v-if="order.paymentStatus === 'PENDING_PAYMENT'">
-          <button @click="payForOrderNonCash" class="btn btn-outline-primary">Оплатить заказ безналичными</button>
+          <span class="badge badge-secondary ml-2">{{ paymentType }}</span>
         </td>
       </tr>
       <tr>
@@ -90,7 +76,21 @@
       </tbody>
     </table>
 
-    <table class="table mt-1">
+    <h3>Управление заказом</h3>
+    <div>
+      <b v-if="noStatusTransitions">Перевод заказа в другой статус невозможен</b>
+      <div v-else>
+        <b>Перевести заказ в статус</b>
+        <select class="form-select p-2 ml-5" v-model="statusTransition">
+          <option v-for="status in statusTransitions" :value="status" :key="status">
+            {{ this.mapOrderStatus(status).screenName }}
+          </option>
+        </select>
+        <button class="btn btn-outline-primary ml-5" v-if="statusTransition !== ''" @click="changeOrderStatus">Перевести</button>
+      </div>
+    </div>
+
+    <table class="table mt-3">
       <thead class="table-dark">
       <tr>
         <th></th>
@@ -127,12 +127,10 @@
       </tbody>
     </table>
 
-    <hr>
-
     <h3>История заказа</h3>
-    <table class="table" v-if="isLoaded">
+    <table class="table">
       <tbody>
-      <tr v-for="event in orderEvents" :key="event">
+      <tr v-for="event in orderEvents.reverse()" :key="event">
         <td>{{ new Date(event.registeredAt).toLocaleDateString('ru-RU', dateTimeOptions) }}</td>
         <td>
           <span v-if="event.type==='ORDER_STATUS_CHANGED'">Статус заказа изменён на
@@ -161,17 +159,15 @@ import ClientOrganizationDataService from "@/services/ClientOrganizationDataServ
 import AddressDataService from "@/services/AddressDataService";
 import ProductDataService from "@/services/ProductDataService";
 import {toFixed} from "@/scripts/common";
-import {mapOrderStatus, mapPaymentStatus, mapPaymentType} from "@/scripts/order/statuses";
+import {getTransitions, mapOrderStatus, mapPaymentStatus, mapPaymentType} from "@/scripts/order/statuses";
 
 export default {
   name: "ClientOrder",
   props: [
-    'id'
+    'orderId'
   ],
   async mounted() {
     await this.fetchOrderData()
-    this.isLoaded = true
-    console.log(this.orderStatus.name)
   },
   computed: {
     orderStatus() {
@@ -183,9 +179,15 @@ export default {
     paymentType() {
       return this.mapPaymentType(this.order.paymentType)
     },
+    statusTransitions() {
+      return getTransitions(this.order.status)
+    },
+    noStatusTransitions() {
+      return this.statusTransitions === undefined
+    },
     documentsAvailable() {
       return this.documents.length > 0
-    },
+    }
   },
 
   data() {
@@ -208,7 +210,7 @@ export default {
         hour: 'numeric',
         minute: 'numeric'
       },
-      isLoaded: false
+      statusTransition: ''
     }
   },
 
@@ -218,7 +220,7 @@ export default {
     toFixed,
     mapPaymentType,
     async fetchOrderData() {
-      this.order = (await OrderDataService.get(this.id)).data
+      this.order = (await OrderDataService.get(this.orderId)).data
       console.log(this.order.status)
       console.log(this.order.paymentType)
 
@@ -281,20 +283,9 @@ export default {
 
     },
 
-    async payForOrderNonCash() {
-      if (confirm(`Подтвердить оплату заказа стоимостью в ${this.order.finalSum} ₽`)) {
-        await OrderDataService.changeOrderPaymentType(this.order.id, {paymentType: 'NON_CASH'})
-        await OrderDataService.changeOrderPaymentStatus(this.order.id, {status: 'PAID'})
-
-        await window.location.reload()
-      }
-    },
-
-    async cancelOrder() {
-      if (confirm(`Отменить этот заказ?`)) {
-        await OrderDataService.changeOrderStatus(this.order.id, {status: 'RETURNED'})
-        await window.location.reload()
-      }
+    async changeOrderStatus() {
+      await OrderDataService.changeOrderStatus(this.orderId, {status: this.statusTransition})
+      await window.location.reload()
     }
   }
 }
