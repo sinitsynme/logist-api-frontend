@@ -75,6 +75,12 @@ const routes =  [
     component: () => import("./components/personal/PersonalDataEditForm.vue")
   },
   {
+    path: "/personalCabinet/changePassword",
+    alias: "/personalCabinet/changePassword",
+    name: "changePassword",
+    component: () => import("./components/personal/ChangePasswordForm.vue")
+  },
+  {
     path: "/manufacturer",
     alias: "/manufacturer-list",
     name: "manufacturer-list",

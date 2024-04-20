@@ -50,12 +50,12 @@
     </table>
 
     <div class="d-flex justify-content-between p-5">
-        <button class="btn btn-outline-primary" @click="routeToEditPersonalData">
-          Редактировать персональные данные
-        </button>
-        <button class="btn btn-outline-primary" @click="routeToEditPersonalData">
-          Сменить пароль
-        </button>
+      <button class="btn btn-outline-primary" @click="routeToEditPersonalData">
+        Редактировать персональные данные
+      </button>
+      <button class="btn btn-outline-primary" @click="routeToChangePassword">
+        Сменить пароль
+      </button>
     </div>
 
   </div>
@@ -100,6 +100,9 @@ export default {
 
     routeToEditPersonalData() {
       this.$router.push("/personalCabinet/edit")
+    },
+    routeToChangePassword() {
+      this.$router.push("/personalCabinet/changePassword")
     }
   }
 }
