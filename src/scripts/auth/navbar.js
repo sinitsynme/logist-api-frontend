@@ -30,8 +30,8 @@ const headerMappings = {
     },
     "ROLE_OWNER": {
         "management": {
-            "Управление складами": "/warehouses",
-            "Управление сотрудниками": "/warehouseWorkers"
+            "Организации": "/management/organizations",
+            "Склады": "/management/warehouse",
         }
     },
     "ROLE_SUPPORT": {

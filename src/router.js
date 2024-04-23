@@ -63,6 +63,32 @@ const routes =  [
     component: () => import("./components/product/Product.vue")
   },
   {
+    path: "/organizationRequest",
+    alias: "/organizationRequest",
+    name: "organizationRequest",
+    component: () => import("./components/warehouseOrganization/WarehouseOrganizationForm.vue")
+  },
+  {
+    path: "/management/organizations",
+    alias: "/management/organizations",
+    name: "organizationList",
+    component: () => import("./components/warehouseOrganization/WarehouseOrganizationList.vue")
+  },
+  {
+    path: "/management/organization/:id",
+    alias: "/management/organization/:id",
+    name: "organization",
+    props: true,
+    component: () => import("./components/warehouseOrganization/WarehouseOrganization.vue")
+  },
+  {
+    path: "/management/organizationEdit/:id",
+    alias: "/management/organizationEdit/:id",
+    name: "organizationEditForm",
+    props: true,
+    component: () => import("./components/warehouseOrganization/WarehouseOrganiationEditForm.vue")
+  },
+  {
     path: "/personalCabinet",
     alias: "/personalCabinet",
     name: "personalCabinet",
@@ -163,7 +189,7 @@ const routes =  [
   },
   {
     path: "/organization/:id",
-    name: "organization",
+    name: "adminOrganization",
     props: true,
     component: () => import("./components/admin/organization/Organization.vue")
   },
@@ -174,7 +200,7 @@ const routes =  [
   },
   {
     path: "/organizationEdit/:id",
-    name: "organizationFormEdit",
+    name: "adminOrganizationFormEdit",
     props: true,
     component: () => import("./components/admin/organization/OrganizationEditForm.vue")
   },

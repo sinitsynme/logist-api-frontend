@@ -35,7 +35,7 @@
           <td>{{ warehouse.name }}</td>
           <td>
             <router-link :to="{
-              name: 'organization',
+              name: 'adminOrganization',
               params: {
                id: warehouse.organization.id
              }

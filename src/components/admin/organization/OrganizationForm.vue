@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-3 w-50">
-    <h2 class="text-center">Создание производителя</h2>
+    <h2 class="text-center">Создание складского предприятия</h2>
 
     <div class="mt-3">
 
@@ -28,8 +28,15 @@ export default {
   data() {
     return {
       organization: {
+        ownerId: '',
+        status: '',
         id: '',
         name: '',
+        inn: '',
+        bik: '',
+        clientAccount: '',
+        bankName: '',
+        correspondentAccount: ''
       }
     }
   },

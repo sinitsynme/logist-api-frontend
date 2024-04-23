@@ -1,45 +1,30 @@
-<template>
-  <div class="container mt-3">
+<template class="w-75">
+  <div class="d-flex justify-content-around mt-3">
     <h2 class="text-center">Просмотр информации о складском предприятии</h2>
-
-    <div class="d-flex justify-content-between mt-4">
-      <router-link :to="{
-        name: 'adminOrganizationFormEdit',
-        params: {
-          id: id
-        }}"
-      >
-        <button class="btn btn-outline-primary pl-2 pr-2">
-          Редактировать организацию
-        </button>
-      </router-link>
-
-      <button class="btn btn-outline-info pl-5 pr-5" @click="approveOrganization" v-if="isAdmin">Одобрить</button>
-      <button class="btn btn-outline-danger pl-5 pr-5" @click="rejectOrganization" v-if="isAdmin">Отклонить</button>
-      <button class="btn btn-outline-danger pl-5 pr-5" @click="closeOrganization">Закрыть</button>
-
-      <router-link :to="{
+    <router-link v-if="isManagementMode" :to="{
         name: 'organizationEditForm',
         params: {
           id: id
         }}"
-      >
-        <button class="btn btn-outline-info pl-5 pr-5">
-          К складам
-        </button>
-      </router-link>
-    </div>
+    >
+      <button class="btn btn-outline-primary pl-5 pr-5">
+        Редактировать
+      </button>
+    </router-link>
+    <router-link v-if="isManagementMode" :to="{
+        name: 'organizationEditForm',
+        params: {
+          id: id
+        }}"
+    >
+      <button class="btn btn-outline-info pl-5 pr-5">
+        К складам
+      </button>
+    </router-link>
+  </div>
 
-    <form @submit.prevent="onsubmit" class="mt-3" v-if="isAdmin">
-      <div class="d-flex justify-content-around mt-2">
-        <label for="newOwnerId">Изменить владельца</label>
-        <input v-model="newOwnerId" type="text" id="newOwnerId" style="width: 60%"
-               placeholder="ID владельца">
-        <button type="submit" class="btn btn-primary" @click="changeOrganizationOwner">Изменить</button>
-      </div>
-    </form>
-
-    <table class="table mt-4">
+  <div class="container mt-3">
+    <table class="table mt-3">
       <tbody>
       <tr>
         <td>
@@ -108,7 +93,7 @@
       </tr>
       <tr>
         <td>
-          <b>Корреспондентскй счет</b>
+          <b>Корреспондентский счет</b>
         </td>
         <td>
           {{ organization.correspondentAccount }}
@@ -116,6 +101,7 @@
       </tr>
       </tbody>
     </table>
+
   </div>
 
 
@@ -126,6 +112,7 @@
 import OrganizationDataService from "@/services/OrganizationDataService";
 import AuthDataService from "@/scripts/auth/AuthDataService";
 import {mapOrganizationStatus} from "@/scripts/warehouseOrganization/statuses";
+import {useModeStore} from "@/stores/modeStore";
 import {useAuthStore} from "@/stores/authStore";
 
 export default {
@@ -146,14 +133,14 @@ export default {
     mappedOrderStatus() {
       return mapOrganizationStatus(this.organization.status)
     },
-    isAdmin() {
-      return this.authStore.user.userRoles.includes("ROLE_ADMIN")
+    isManagementMode() {
+      return this.modeStore.isManagementMode()
     }
   },
   data() {
     return {
       authStore: useAuthStore(),
-      newOwnerId: '',
+      modeStore: useModeStore(),
       organization: {
         owner: {},
         ownerId: '',
@@ -201,42 +188,6 @@ export default {
             }
           })
     },
-    deleteOrganization() {
-      OrganizationDataService
-          .delete(this.id)
-          .then(response => {
-            console.log(response)
-            this.$router.push("/organization")
-          })
-          .catch(e => {
-            console.log(e);
-          });
-    },
-    async changeOrganizationOwner() {
-      await OrganizationDataService.changeOwner(this.id, this.newOwnerId)
-      await alert("Владелец организации изменен")
-      await window.location.reload()
-    },
-    async approveOrganization() {
-      await OrganizationDataService
-          .changeStatus(this.id, "APPROVED")
-      await alert("Статус организации изменен")
-      await window.location.reload()
-    },
-    async rejectOrganization() {
-      await OrganizationDataService
-          .changeStatus(this.id, "REJECTED")
-      await alert("Статус организации изменен")
-      await window.location.reload()
-    },
-    async closeOrganization() {
-      if (confirm("Вы уверены, что хотите закрыть организацию?")) {
-        await OrganizationDataService
-            .changeStatus(this.id, "CLOSED")
-        await alert("Статус организации изменен")
-        await window.location.reload()
-      }
-    }
   }
 }
 </script>

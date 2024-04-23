@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-3 w-50">
-    <h2 class="text-center mt-3">Редактирование предприятия с ID = {{ id }}</h2>
+    <h2 class="text-center mt-3">Редактирование предприятия</h2>
     <form @submit.prevent="onsubmit" class="mt-3">
       <div class="form-group">
         <label for="orgInn">ИНН</label>
@@ -100,7 +100,7 @@ export default {
           .then(response => {
             let data = response.data;
             console.log(data)
-            this.$router.push("/organization/" + id)
+            this.$router.push("/management/organization/" + id)
           })
           .catch(e => {
             console.log(e);
