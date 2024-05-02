@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-3">
-    <h2 class="text-center">Просмотр информации о товаре на складе {{ warehouseId }}</h2>
+    <h2 class="text-center">Управление остатками товара на складе с ID = {{ warehouseId }}</h2>
     <div class="row mt-5 ">
       <div class="ml-auto mr-auto ">
         <div class="border">
@@ -9,7 +9,7 @@
           </div>
         </div>
       </div>
-      <table class="table w-50">
+      <table class="table w-75">
         <tbody>
         <tr>
           <td>
@@ -76,16 +76,30 @@
           <td>
             <b>Стоимость, ₽</b>
           </td>
-          <td>
+          <td class="d-flex">
             {{ storedProduct.price }}
+            <form class="ml-auto" @submit.prevent="onsubmit">
+              <b>Новая стоимость, ₽ </b>
+              <input id="priceInput" type="number" step="0.01" max="10000" width="50px" v-model="newPrice"
+                     class="align-middle mr-1">
+              <button class="btn btn-outline-info align-middle fixed-width" @click="updatePrice">Обновить
+              </button>
+            </form>
           </td>
         </tr>
         <tr>
           <td>
             <b>Квант (кратность в заказе)</b>
           </td>
-          <td>
+          <td class="d-flex">
             {{ storedProduct.quantum }}
+            <form class="ml-auto" @submit.prevent="onsubmit">
+              <b>Новая кратность, ед. </b>
+              <input id="quantumInput" type="number" step="1" min="1" max="1000" width="50px" v-model="newQuantum"
+                     class="align-middle mr-1">
+              <button class="btn btn-outline-info align-middle fixed-width" @click="updateQuantum">Обновить
+              </button>
+            </form>
           </td>
         </tr>
         <tr>
@@ -97,6 +111,7 @@
               {{ storedProduct.availableForReserveQuantity }}
 
               <form class="ml-auto" @submit.prevent="onsubmit">
+                <b>Зарезервировать, ед. </b>
                 <input id="reserveProductInput" type="number" max="10000" width="50px" v-model="wantToReserveQuantity"
                        class="align-middle mr-1">
                 <button class="btn btn-outline-info align-middle fixed-width" @click="reserveProduct">Зарезервировать
@@ -115,6 +130,7 @@
               {{ storedProduct.reservedQuantity }}
 
               <form class="ml-auto" @submit.prevent="onsubmit">
+                <b>Списать, ед. </b>
                 <input id="removeProductInput" type="number" max="10000" width="50px" v-model="wantToRemoveQuantity"
                        class="align-middle mr-1">
                 <button class="btn btn-outline-info align-middle fixed-width" @click="removeProduct">Списать резерв
@@ -134,6 +150,7 @@
               {{ storedProduct.quantity }}
 
               <form class="ml-auto" @submit.prevent="onsubmit">
+                <b>Принять, ед. </b>
                 <input id="addProductInput" type="number" max="10000" width="50px" v-model="wantToAddQuantity"
                        class="align-middle mr-1">
                 <button class="btn btn-outline-info align-middle fixed-width" @click="addProduct">Принять товар</button>
@@ -166,10 +183,16 @@ export default {
   },
   data() {
     return {
+      newPrice: 0.00,
+      newQuantum: 1,
       wantToReserveQuantity: 0,
       wantToRemoveQuantity: 0,
       wantToAddQuantity: 0,
 
+      warehouse: {
+        id: '',
+        name: ''
+      },
       storedProduct: {
         categoryCode: ' ',
         categoryName: ' ',
@@ -283,6 +306,46 @@ export default {
           .then(() => {
             this.$router.go(0)
           })
+    },
+
+    updatePrice() {
+      if (this.newPrice < 1) {
+        let input = document.getElementById("priceInput")
+        input.classList.add("red")
+        return
+      }
+
+      let requestBody = {
+        productId: this.productId,
+        warehouseId: this.warehouseId,
+        price: this.newPrice,
+        quantum: this.storedProduct.quantum
+      }
+      StoredProductDataService
+          .updateQuantumAndPrice(requestBody)
+          .then(() => {
+            this.$router.go(0)
+          })
+    },
+
+    updateQuantum() {
+      if (this.newQuantum < 1 || this.newQuantum > 1000) {
+        let input = document.getElementById("quantumInput")
+        input.classList.add("red")
+        return
+      }
+
+      let requestBody = {
+        productId: this.productId,
+        warehouseId: this.warehouseId,
+        price: this.storedProduct.price,
+        quantum: this.newQuantum
+      }
+      StoredProductDataService
+          .updateQuantumAndPrice(requestBody)
+          .then(() => {
+            this.$router.go(0)
+          })
     }
   }
 }
@@ -291,7 +354,7 @@ export default {
 
 <style scoped>
 .big-product-image {
-  height: 400px;
+  height: 250px;
 }
 
 input[type='number'] {

@@ -66,27 +66,27 @@ const routes =  [
     path: "/organizationRequest",
     alias: "/organizationRequest",
     name: "organizationRequest",
-    component: () => import("./components/warehouseOrganization/WarehouseOrganizationForm.vue")
+    component: () => import("./components/warehouseOrganization/OwnerOrganizationForm.vue")
   },
   {
     path: "/management/organizations",
     alias: "/management/organizations",
     name: "organizationList",
-    component: () => import("./components/warehouseOrganization/WarehouseOrganizationList.vue")
+    component: () => import("./components/warehouseOrganization/OwnerOrganizationList.vue")
   },
   {
     path: "/management/organization/:id",
     alias: "/management/organization/:id",
     name: "organization",
     props: true,
-    component: () => import("./components/warehouseOrganization/WarehouseOrganization.vue")
+    component: () => import("./components/warehouseOrganization/OwnerOrganization.vue")
   },
   {
     path: "/management/organizationEdit/:id",
     alias: "/management/organizationEdit/:id",
     name: "organizationEditForm",
     props: true,
-    component: () => import("./components/warehouseOrganization/WarehouseOrganiationEditForm.vue")
+    component: () => import("./components/warehouseOrganization/OwnerOrganiationEditForm.vue")
   },
   {
     path: "/personalCabinet",
@@ -203,6 +203,12 @@ const routes =  [
     name: "adminOrganizationFormEdit",
     props: true,
     component: () => import("./components/admin/organization/OrganizationEditForm.vue")
+  },
+  {
+    path: "/organization/:organizationId/warehouses",
+    name: "warehousesInOrganization",
+    props: true,
+    component: () => import("./components/warehouse/WarehousesInOrganizationList.vue")
   },
   {
     path: "/warehouse",

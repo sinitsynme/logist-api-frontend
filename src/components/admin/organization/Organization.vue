@@ -19,9 +19,9 @@
       <button class="btn btn-outline-danger pl-5 pr-5" @click="closeOrganization">Закрыть</button>
 
       <router-link :to="{
-        name: 'organizationEditForm',
+        name: 'warehousesInOrganization',
         params: {
-          id: id
+          organizationId: id
         }}"
       >
         <button class="btn btn-outline-info pl-5 pr-5">

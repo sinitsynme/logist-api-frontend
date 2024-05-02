@@ -139,7 +139,7 @@ export default {
     },
     getStoredProducts() {
       StoredProductDataService
-          .getPage(0, 15, this.warehouseId)
+          .getPage(0, 50, this.warehouseId)
           .then(response => {
                 console.log(response)
                 let storedProducts = response.data.content
