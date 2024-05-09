@@ -42,7 +42,7 @@
       <td><b>{{ supplyItem.price }} ₽</b></td>
       <td>{{ supplyItem.quantum }}</td>
       <td>
-        <input type="number" :min="supplyItem.quantum" v-model="supplyItem.quantity" :step="supplyItem.quantum"
+        <input type="number" width="50px" :min="supplyItem.quantum" v-model="supplyItem.quantity" :step="supplyItem.quantum"
                :max="supplyItem.availableForReserveQuantity">
       </td>
       <td>
@@ -114,4 +114,8 @@ export default {
 
 
 <style scoped>
+input[type='number'] {
+  width: 80px;
+  font-size: 16pt;
+}
 </style>

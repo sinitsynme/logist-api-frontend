@@ -17,7 +17,7 @@
       <tr v-if="isLoaded && ['NEW', 'IN_PROGRESS', 'READY_TO_DELIVER'].includes(orderStatus.name)">
         <td>
           <div>Заказ ещё можно отменить, </div>
-          <div>если передумали 🚫</div>
+          <div>пока он не передан в доставку 🚫</div>
         </td>
         <td>
           <button class="btn btn-outline-danger" @click="cancelOrder">Отменить заказ</button>

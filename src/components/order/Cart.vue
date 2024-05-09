@@ -221,4 +221,8 @@ td {
   text-align: center;
 }
 
+input[type='number'] {
+  width: 80px;
+  font-size: 16pt;
+}
 </style>
