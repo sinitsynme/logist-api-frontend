@@ -1,4 +1,7 @@
 <template>
+  <router-link to="/personalCabinet" class="ml-5">
+    Вернуться в личный кабинет
+  </router-link>
   <div class="container mt-3 w-50">
     <h2 class="text-center mt-3">Редактирование персональных данных</h2>
     <form @submit.prevent="onsubmit" class="mt-3">

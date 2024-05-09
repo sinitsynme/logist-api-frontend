@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div class="container mt-3">
+    <div class="container mt-2">
       <h3 class="text-center">
         Что такое "СкладЛайн"?
       </h3>
@@ -42,14 +42,13 @@
           <b>Потребителям</b> можно заказывать товары оптом у разных поставщиков на разные организации и адреса, отслеживать свои заказы,
           контролировать состояние заказов на платформе
         </p>
-
       </div>
     </div>
   </div>
 
-  <div v-if="isManagementMode" class="d-flex justify-content-around">
+  <div v-if="isManagementMode" class="d-flex justify-content-around mt-3">
     <img :src="require('../assets/management-long-logo.png')" alt="СкладЛайн Менеджмент" style="max-width: 35%">
-    <div class="text-center">
+    <div class="text-center mt-2">
       <h1>СкладЛайн Менеджмент</h1>
       <h2>Панель управления</h2>
     </div>

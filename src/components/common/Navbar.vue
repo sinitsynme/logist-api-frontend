@@ -40,6 +40,10 @@
           <a class="alert-link">Перейти в СкладЛайн Менеджмент</a>
         </div>
 
+        <router-link to="/organizationRequest" v-else-if="isShopMode && !hasAccessToManagement && isLoggedIn">
+          Стать поставщиком
+        </router-link>
+
         <div @click="changeMode" v-if="isManagementMode">
           <a class="alert-link">Вернуться в СкладЛайн</a>
         </div>
@@ -106,6 +110,9 @@ export default {
     },
     hasAccessToManagement() {
       return this.managementNavItems != null
+    },
+    isLoggedIn() {
+      return this.authStore.user.userId
     }
   },
   methods: {

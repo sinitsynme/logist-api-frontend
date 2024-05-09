@@ -18,8 +18,16 @@ class AuthDataService {
         return logapiAxios.get(`/auth/rest/api/v1/user/${id}`)
     }
 
+    async getUserDataAdmin(id) {
+        return logapiAxios.get(`/auth/rest/api/v1/user/admin-id/${id}`)
+    }
+
     async updateUserData(id, userData) {
         return logapiAxios.patch(`/auth/rest/api/v1/user/${id}/data`, userData)
+    }
+
+    async changePassword(id, password) {
+        return logapiAxios.patch(`/auth/rest/api/v1/user/${id}/password`, {password: password})
     }
 }
 

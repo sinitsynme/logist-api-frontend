@@ -71,7 +71,7 @@
       </tr>
       </tbody>
     </table>
-    <div class="d-flex justify-content-around mt-4">
+    <div v-if="isOwner" class="d-flex justify-content-around mt-4">
       <router-link :to="{
         name: 'ClientOrganizationEdit',
         params: {
@@ -103,6 +103,7 @@
 
 import ClientOrganizationDataService from "@/services/ClientOrganizationDataService";
 import AddressDataService from "@/services/AddressDataService";
+import {useAuthStore} from "@/stores/authStore";
 
 export default {
   name: "ClientOrganization",
@@ -115,12 +116,17 @@ export default {
   computed: {
     noAddressFound() {
       return this.clientOrganization.addressResponseDto.length === 0
+    },
+    isOwner() {
+      return this.authStore.user.userId === this.clientOrganization.clientId
     }
   },
 
   data() {
     return {
+      authStore: useAuthStore(),
       clientOrganization: {
+        clientId: '',
         name: '',
         bik: '',
         clientAccount: '',
@@ -138,6 +144,7 @@ export default {
           .then(async response => {
             let data = response.data;
 
+            this.clientOrganization.clientId = data.clientId;
             this.clientOrganization.inn = data.inn;
             this.clientOrganization.name = data.name;
             this.clientOrganization.bik = data.bik;

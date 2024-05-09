@@ -29,6 +29,10 @@ class StoredProductDataService {
         return logapiAxios.patch(`/warehouse/rest/api/v1/warehouse/product/remove`, requestBody)
     }
 
+    updateQuantumAndPrice(requestBody) {
+        return logapiAxios.patch(`/warehouse/rest/api/v1/warehouse/product`, requestBody)
+    }
+
     async getProductsMinPrices(idArray) {
         let baseUrl = "/warehouse/rest/api/v1/warehouse/product/minimalPrice?"
         let i

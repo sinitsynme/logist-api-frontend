@@ -63,6 +63,32 @@ const routes =  [
     component: () => import("./components/product/Product.vue")
   },
   {
+    path: "/organizationRequest",
+    alias: "/organizationRequest",
+    name: "organizationRequest",
+    component: () => import("./components/warehouseOrganization/OwnerOrganizationForm.vue")
+  },
+  {
+    path: "/management/organizations",
+    alias: "/management/organizations",
+    name: "organizationList",
+    component: () => import("./components/warehouseOrganization/OwnerOrganizationList.vue")
+  },
+  {
+    path: "/management/organization/:id",
+    alias: "/management/organization/:id",
+    name: "organization",
+    props: true,
+    component: () => import("./components/warehouseOrganization/OwnerOrganization.vue")
+  },
+  {
+    path: "/management/organizationEdit/:id",
+    alias: "/management/organizationEdit/:id",
+    name: "organizationEditForm",
+    props: true,
+    component: () => import("./components/warehouseOrganization/OwnerOrganiationEditForm.vue")
+  },
+  {
     path: "/personalCabinet",
     alias: "/personalCabinet",
     name: "personalCabinet",
@@ -73,6 +99,12 @@ const routes =  [
     alias: "/personalCabinet/edit",
     name: "personalCabinetEdit",
     component: () => import("./components/personal/PersonalDataEditForm.vue")
+  },
+  {
+    path: "/personalCabinet/changePassword",
+    alias: "/personalCabinet/changePassword",
+    name: "changePassword",
+    component: () => import("./components/personal/ChangePasswordForm.vue")
   },
   {
     path: "/manufacturer",
@@ -157,7 +189,7 @@ const routes =  [
   },
   {
     path: "/organization/:id",
-    name: "organization",
+    name: "adminOrganization",
     props: true,
     component: () => import("./components/admin/organization/Organization.vue")
   },
@@ -168,9 +200,15 @@ const routes =  [
   },
   {
     path: "/organizationEdit/:id",
-    name: "organizationFormEdit",
+    name: "adminOrganizationFormEdit",
     props: true,
     component: () => import("./components/admin/organization/OrganizationEditForm.vue")
+  },
+  {
+    path: "/organization/:organizationId/warehouses",
+    name: "warehousesInOrganization",
+    props: true,
+    component: () => import("./components/warehouse/WarehousesInOrganizationList.vue")
   },
   {
     path: "/warehouse",

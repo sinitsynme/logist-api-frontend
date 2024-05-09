@@ -9,6 +9,10 @@ class WarehouseDataService {
         return logapiAxios.get(`/warehouse/rest/api/v1/warehouse?page=${page}&size=${size}`);
     }
 
+    getPageByOrganizationId(orgId, page, size) {
+        return logapiAxios.get(`/warehouse/rest/api/v1/warehouse/organization-id/${orgId}?page=${page}&size=${size}`);
+    }
+
     create(warehouse) {
         return logapiAxios.post(`/warehouse/rest/api/v1/warehouse`, warehouse);
     }

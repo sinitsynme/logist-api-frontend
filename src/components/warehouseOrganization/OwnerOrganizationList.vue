@@ -2,31 +2,15 @@
 
   <div class="justify-content-around mt-2">
     <div class="d-flex justify-content-around">
-      <span>Список всех складских предприятий</span>
+      <span>Список ваших складских предприятий</span>
 
       <router-link to="/organizationRequest" class="justify-content-center">
-        <button class="btn btn-outline-primary mt-3">Создать предприятие</button>
+        <button class="btn btn-outline-primary mt-3">Подать заявку на новое предприятие</button>
       </router-link>
     </div>
 
-    <div class="container-fluid mt-2 d-flex ml-3 mr-3 justify-content-around">
-      <div class="w-25">
-        <div>
-          <div>
-            <b>Фильтровать по статусам</b>
-            <div class="mt-2">
-              <div v-for="status in statuses" :key="status" class="ml-2">
-                <input type="checkbox" v-model="statusesFilter" :value="status"/>
-                <label class="ml-2">{{ mapOrganizationStatus(status).screenName }}</label>
-              </div>
-            </div>
-          </div>
-          <button class="btn btn-outline-info" @click="clearFilter">Очистить фильтр</button>
-          <button class="btn btn-outline-primary ml-2" @click="getOrganizations">Фильтровать</button>
-        </div>
-      </div>
-
-      <div class="table-responsive">
+    <div style="width: 75%; margin: auto" class="mt-3">
+      <div class="table-responsive d-flex justify-content-around">
         <table class="table mt-2">
           <thead class="thead-dark">
           <tr>
@@ -77,6 +61,7 @@
 
 import OrganizationDataService from "@/services/OrganizationDataService";
 import {mapOrganizationStatus} from "@/scripts/warehouseOrganization/statuses";
+import {useAuthStore} from "@/stores/authStore";
 
 export default {
   name: "organization-list",
@@ -85,18 +70,18 @@ export default {
   },
   data() {
     return {
+      authStore: useAuthStore(),
       organizations: [],
-      statuses: ["NEW", "APPROVED", "REJECTED", "CLOSED"],
-      statusesFilter: ["NEW", "APPROVED", "REJECTED", "CLOSED"],
     }
   },
 
   methods: {
     mapOrganizationStatus,
     getOrganizations() {
-      let statuses = this.statusesFilter
+      let statuses = ["NEW", "APPROVED", "REJECTED", "CLOSED"]
+      let ownerId = this.authStore.user.userId
       OrganizationDataService
-          .getPage(statuses, 0, 100)
+          .getPageByOwner(statuses, ownerId,0, 100)
           .then(response => {
             this.organizations = response.data.content
 

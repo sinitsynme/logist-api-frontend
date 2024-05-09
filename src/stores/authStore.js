@@ -63,6 +63,7 @@ export const useAuthStore = defineStore('authStore', {
 
         logout() {
             localStorage.setItem("user", "{}")
+            localStorage.setItem("mode", '{"modeValue": "shop"}')
         }
     }
 })
