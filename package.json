@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
-    "build": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
-    "lint": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "bootstrap": "^4.6.0",
+    "axios": "^1.7.5",
+    "bootstrap": "^5.3.3",
     "core-js": "^3.6.5",
     "form-data": "^4.0.0",
     "jquery": "^3.6.0",
@@ -21,12 +21,12 @@
   },
   "devDependencies": {
     "@vue-leaflet/vue-leaflet": "^0.10.1",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
+    "eslint": "^7.32.0",
     "eslint-plugin-vue": "^7.0.0",
     "leaflet": "^1.9.4",
     "vue-cli-plugin-vuetify": "~2.5.8"
