@@ -1,63 +1,62 @@
 <template>
-  <div class="d-flex bg-light justify-content-between">
+  <div class="d-flex bg-light justify-content-between ml-3">
 
-    <router-link to="/" class="mt-3 ml-4">
+    <router-link to="/">
       <img v-if="isShopMode" :src="require('../../assets/long-logo.png')" width="200" alt="СкладЛайн">
       <img v-if="isManagementMode" :src="require('../../assets/management-long-logo.png')" width="200"
            alt="СкладЛайн Менеджмент">
     </router-link>
 
-    <div class="d-flex mt-3 ml-4 mr-4">
-
-      <div class="align-self-center">
-        <div v-if="isShopMode">
-          <SearchBar/>
-        </div>
-      </div>
-
-      <div class="align-self-center">
-        Горячая линия по всей России: <a href="tel:88005553535">8(800)555-35-35</a>
+    <div class="align-self-center">
+      <div v-if="isShopMode">
+        <SearchBar/>
       </div>
     </div>
 
+    <div class="align-self-center">
+      Горячая линия по всей России: <a href="tel:88005553535">8(800)555-35-35</a>
+    </div>
   </div>
 
+
   <nav class="navbar navbar-expand bg-light">
-    <div class="navbar-nav align-items-center">
-      <li class="nav-item" v-for="item in shopLinksKeys" :key="item">
-        <router-link :to="shopNavItems[item]" class="nav-link"> {{ item }}</router-link>
-      </li>
+    <div class="d-flex flex-fill justify-content-between">
 
-      <li class="nav-item" v-for="item in managementLinksKeys" :key="item">
-        <router-link :to="managementNavItems[item]" class="nav-link"> {{ item }}</router-link>
-      </li>
+      <div class="navbar-nav align-items-center">
+        <li class="nav-item" v-for="item in shopLinksKeys" :key="item">
+          <router-link :to="shopNavItems[item]" class="nav-link"> {{ item }}</router-link>
+        </li>
 
-    </div>
+        <li class="nav-item" v-for="item in managementLinksKeys" :key="item">
+          <router-link :to="managementNavItems[item]" class="nav-link"> {{ item }}</router-link>
+        </li>
 
-    <div class="ml-auto align-items-center">
-      <div class="d-flex justify-content-between align-items-center">
-        <div @click="changeMode" v-if="isShopMode && hasAccessToManagement">
-          <a class="alert-link">Перейти в СкладЛайн Менеджмент</a>
-        </div>
+      </div>
 
-        <router-link to="/organizationRequest" v-else-if="isShopMode && !hasAccessToManagement && isLoggedIn">
-          Стать поставщиком
-        </router-link>
+      <div class="align-items-center">
+        <div class="d-flex justify-content-between align-items-center">
+          <div @click="changeMode" v-if="isShopMode && hasAccessToManagement">
+            <a class="alert-link">Перейти в СкладЛайн Менеджмент</a>
+          </div>
 
-        <div @click="changeMode" v-if="isManagementMode">
-          <a class="alert-link">Вернуться в СкладЛайн</a>
-        </div>
-
-        <div v-if="isShopMode" class="ml-3">
-          <router-link to="/cart">
-            <img :src="require('../../assets/icons/shopcart.png')" width="40px" alt="Корзина">
+          <router-link to="/organizationRequest" v-else-if="isShopMode && !hasAccessToManagement && isLoggedIn">
+            Стать поставщиком
           </router-link>
-        </div>
 
-        <AuthComponent class="ml-3"/>
+          <div @click="changeMode" v-if="isManagementMode">
+            <a class="alert-link">Вернуться в СкладЛайн</a>
+          </div>
+
+          <div v-if="isShopMode" class="mr-3">
+            <router-link to="/cart">
+              <img :src="require('../../assets/icons/shopcart.png')" width="40px" alt="Корзина">
+            </router-link>
+          </div>
+
+          <AuthComponent class="ml-3"/>
+        </div>
       </div>
     </div>
-
   </nav>
 </template>
 

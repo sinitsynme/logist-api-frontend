@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-3">
     <h2 class="text-center">Управление остатками товара на складе с ID = {{ warehouseId }}</h2>
-    <div class="row mt-5 ">
+    <div class="d-flex justify-content-between mt-5 ">
       <div class="ml-auto mr-auto ">
         <div class="border">
           <div class="pl-3 pr-3">

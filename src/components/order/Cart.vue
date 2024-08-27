@@ -21,13 +21,14 @@
           <tr>
             <td class="align-middle cart-td">
               <h3>Заказ со склада:
-                <router-link :to="{
-          name: 'warehouse',
-          params: {
-            id: preparedOrder.warehouseId
-          }
-        }">{{ preparedOrder.warehouseName }}
-                </router-link>
+<!--      FIXME          <router-link :to="{-->
+<!--          name: 'warehouse',-->
+<!--          params: {-->
+<!--            id: preparedOrder.warehouseId-->
+<!--          }-->
+<!--        }">-->
+                  {{ preparedOrder.warehouseName }}
+<!--                </router-link>-->
               </h3>
             </td>
             <td class="align-middle cart-td ">
@@ -44,20 +45,20 @@
           <tbody>
           <tr v-for="product in preparedOrder.products" :key="product.id">
             <td class="align-middle cart-td">
-              <router-link :to="{
-            name: 'product',
-            params: {id: product.productId}
-          }">
+<!--              <router-link :to="{-->
+<!--            name: 'product',-->
+<!--            params: {id: product.productId}-->
+<!--          }">-->
                 <img :src="product.imageLink" alt="У товара нет изображения" class="small-product-image">
-              </router-link>
+<!--              </router-link>-->
             </td>
             <td class="align-middle cart-td">
-              <router-link :to="{
-            name: 'product',
-            params: {id: product.productId}
-          }">
+<!--              <router-link :to="{-->
+<!--            name: 'product',-->
+<!--            params: {id: product.productId}-->
+<!--          }">-->
                 {{ product.name }}
-              </router-link>
+<!--              </router-link>-->
             </td>
             <td class="align-middle cart-td">
               <input @change="changeProductQuantity(

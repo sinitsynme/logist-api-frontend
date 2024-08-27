@@ -25,14 +25,14 @@
               <b>Категория</b>
             </td>
             <td>
-              <router-link :to="{
-              name: 'productCategory',
-              params: {
-               code: product.category.categoryCode
-             }
-              }">
+<!--              <router-link :to="{-->
+<!--              name: 'productCategory',-->
+<!--              params: {-->
+<!--               code: product.category.categoryCode-->
+<!--             }-->
+<!--              }">-->
                 {{ product.category.categoryName }}
-              </router-link>
+<!--              </router-link>-->
             </td>
           </tr>
           <tr>

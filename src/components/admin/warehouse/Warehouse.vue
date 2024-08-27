@@ -24,7 +24,7 @@
     </router-link>
     </div>
 
-    <div class="row mt-3 ">
+    <div class="d-flex mt-3 ">
       <div class="border border-dark mr-2">
         <MapComponent :lat="lat" :lng="lng"/>
       </div>

@@ -14,7 +14,7 @@
         </button>
       </router-link>
     </div>
-    <div class="row mt-3 ">
+    <div class="d-flex justify-content-between mt-3 ">
       <img :src="product.imageLink" alt="У товара нет изображения" class="big-product-image mr-auto ml-auto">
       <table class="table w-50">
         <tbody>
@@ -47,14 +47,14 @@
             <b>Категория</b>
           </td>
           <td>
-            <router-link :to="{
-              name: 'productCategory',
-              params: {
-               code: product.category.categoryCode
-             }
-              }">
+<!--            <router-link :to="{-->
+<!--              name: 'productCategory',-->
+<!--              params: {-->
+<!--               code: product.category.categoryCode-->
+<!--             }-->
+<!--              }">-->
               {{ product.category.categoryName }}
-            </router-link>
+<!--            </router-link>-->
           </td>
         </tr>
         <tr>
